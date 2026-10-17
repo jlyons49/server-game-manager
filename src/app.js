@@ -1,65 +1,12 @@
 // ==========================================================================
-// HEFTY RACCOON GAMES - ARCADE PORTAL APPLICATION LOGIC
-// Domain: game.heftyracoon.com
+// HEFTY RACCOON'S GAMING SHRINE - APPLICATION LOGIC
+// Domain: game.heftyracoon.com (Authentic Late-90s Web Experience)
 // ==========================================================================
 
 import { fallbackGamesData } from './games-data.js';
 
-// Procedural 90s Chiptune / MIDI BGM Generator (Pure Web Audio API, Zero Assets)
-class RetroMidiPlayer {
-  constructor() {
-    this.ctx = null;
-    this.isPlaying = false;
-    this.timer = null;
-    this.step = 0;
-    // Catchy retro 90s arcade groove loop (C major pentatonic / blues)
-    this.melody = [
-      261.63, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63, 293.66,
-      261.63, 392.00, 523.25, 659.25, 587.33, 523.25, 440.00, 392.00,
-      349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23, 329.63,
-      293.66, 392.00, 440.00, 493.88, 523.25, 0,      523.25, 0
-    ];
-  }
-
-  toggle(btn) {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      this.ctx = new AudioCtx();
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
-    }
-
-    if (this.isPlaying) {
-      clearInterval(this.timer);
-      this.isPlaying = false;
-      if (btn) btn.textContent = '🎵 Play 90s MIDI BGM';
-    } else {
-      this.isPlaying = true;
-      if (btn) btn.textContent = '⏸ Pause 90s MIDI BGM';
-      this.timer = setInterval(() => {
-        const freq = this.melody[this.step % this.melody.length];
-        this.step++;
-        if (freq > 0 && this.ctx) {
-          const osc = this.ctx.createOscillator();
-          const gain = this.ctx.createGain();
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-          gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.16);
-          osc.connect(gain);
-          gain.connect(this.ctx.destination);
-          osc.start();
-          osc.stop(this.ctx.currentTime + 0.18);
-        }
-      }, 160);
-    }
-  }
-}
-
 class GamePortalApp {
   constructor() {
-    this.midi = new RetroMidiPlayer();
     this.catalog = null;
     this.games = [];
     this.categories = [];
@@ -68,7 +15,6 @@ class GamePortalApp {
     this.activeCategory = 'all';
     this.searchQuery = '';
     this.sortBy = 'featured';
-    this.viewMode = 'grid'; // 'grid' | 'list'
     this.currentPage = 1;
     this.itemsPerPage = 12; // Scalable chunk size for arbitrarily large number of games
     
@@ -78,14 +24,12 @@ class GamePortalApp {
     // DOM Elements Cache
     this.dom = {
       heroSection: document.getElementById('hero-section'),
-      spotlightCard: document.getElementById('spotlight-card'),
       spotlightTitle: document.getElementById('spotlight-title'),
       spotlightSubtitle: document.getElementById('spotlight-subtitle'),
       spotlightDesc: document.getElementById('spotlight-desc'),
       spotlightTags: document.getElementById('spotlight-tags'),
       spotlightRating: document.getElementById('spotlight-rating'),
       spotlightCategory: document.getElementById('spotlight-category'),
-      spotlightVersion: document.getElementById('spotlight-version'),
       spotlightIcon: document.getElementById('spotlight-icon'),
       btnSpotlightPlay: document.getElementById('btn-spotlight-play'),
       btnSpotlightDetails: document.getElementById('btn-spotlight-details'),
@@ -94,11 +38,10 @@ class GamePortalApp {
       categoriesBar: document.getElementById('categories-bar'),
       resultsCount: document.getElementById('results-count'),
       sortSelect: document.getElementById('sort-select'),
-      viewGridBtn: document.getElementById('view-grid'),
-      viewListBtn: document.getElementById('view-list'),
       gamesGrid: document.getElementById('games-grid'),
       paginationControls: document.getElementById('pagination-controls'),
       headerGameCount: document.getElementById('header-game-count'),
+      visitorCounterVal: document.getElementById('visitor-counter-val'),
 
       // Details Modal
       detailsModal: document.getElementById('details-modal'),
@@ -118,12 +61,28 @@ class GamePortalApp {
   }
 
   async init() {
+    this.initVisitorCounter();
     await this.loadCatalog();
     this.bindEvents();
     this.renderCategories();
     this.renderSpotlight();
     this.applyRoutingFromHash();
     this.renderCatalog();
+  }
+
+  initVisitorCounter() {
+    try {
+      let hits = parseInt(localStorage.getItem('hefty_retro_visits') || '1337', 10);
+      hits += 1;
+      localStorage.setItem('hefty_retro_visits', hits.toString());
+      if (this.dom.visitorCounterVal) {
+        this.dom.visitorCounterVal.textContent = String(hits).padStart(6, '0');
+      }
+    } catch {
+      if (this.dom.visitorCounterVal) {
+        this.dom.visitorCounterVal.textContent = '001338';
+      }
+    }
   }
 
   async loadCatalog() {
@@ -140,89 +99,92 @@ class GamePortalApp {
     this.categories = this.catalog.categories || [];
     
     if (this.dom.headerGameCount) {
-      this.dom.headerGameCount.textContent = `${this.games.length} Games Active`;
+      this.dom.headerGameCount.textContent = `${this.games.length} Games Loaded`;
     }
   }
 
   bindEvents() {
     // Search input (with debounce)
     let searchDebounce;
-    this.dom.searchInput.addEventListener('input', (e) => {
-      clearTimeout(searchDebounce);
-      searchDebounce = setTimeout(() => {
-        this.searchQuery = e.target.value.trim().toLowerCase();
-        this.currentPage = 1;
-        this.renderCatalog();
-      }, 150);
-    });
+    if (this.dom.searchInput) {
+      this.dom.searchInput.addEventListener('input', (e) => {
+        clearTimeout(searchDebounce);
+        searchDebounce = setTimeout(() => {
+          this.searchQuery = e.target.value.trim().toLowerCase();
+          this.currentPage = 1;
+          this.renderCatalog();
+        }, 150);
+      });
+    }
 
     // Keyboard shortcut '/' to search
     window.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement !== this.dom.searchInput) {
         e.preventDefault();
-        this.dom.searchInput.focus();
-        this.dom.searchInput.select();
+        if (this.dom.searchInput) {
+          this.dom.searchInput.focus();
+          this.dom.searchInput.select();
+        }
       } else if (e.key === 'Escape') {
-        if (this.dom.detailsModal.classList.contains('active')) {
+        if (this.dom.detailsModal && this.dom.detailsModal.classList.contains('active')) {
           this.closeDetailsModal();
         }
       }
     });
 
     // Sorting
-    this.dom.sortSelect.addEventListener('change', (e) => {
-      this.sortBy = e.target.value;
-      this.currentPage = 1;
-      this.renderCatalog();
-    });
-
-    // View mode toggle
-    this.dom.viewGridBtn.addEventListener('click', () => {
-      this.viewMode = 'grid';
-      this.dom.viewGridBtn.classList.add('active');
-      this.dom.viewListBtn.classList.remove('active');
-      this.dom.gamesGrid.classList.remove('list-view');
-    });
-
-    this.dom.viewListBtn.addEventListener('click', () => {
-      this.viewMode = 'list';
-      this.dom.viewListBtn.classList.add('active');
-      this.dom.viewGridBtn.classList.remove('active');
-      this.dom.gamesGrid.classList.add('list-view');
-    });
+    if (this.dom.sortSelect) {
+      this.dom.sortSelect.addEventListener('change', (e) => {
+        this.sortBy = e.target.value;
+        this.currentPage = 1;
+        this.renderCatalog();
+      });
+    }
 
     // Details Modal Controls
-    this.dom.btnCloseDetails.addEventListener('click', () => this.closeDetailsModal());
-    this.dom.detailsModal.addEventListener('click', (e) => {
-      if (e.target === this.dom.detailsModal) this.closeDetailsModal();
-    });
-    this.dom.btnModalLaunch.addEventListener('click', () => {
-      const g = this.activeGame;
-      this.closeDetailsModal();
-      if (g) this.launchGame(g);
-    });
-    this.dom.btnModalShare.addEventListener('click', () => {
-      if (this.activeGame) {
-        const shareUrl = `${window.location.origin}${window.location.pathname}#play=${this.activeGame.id}`;
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          const original = this.dom.btnModalShare.innerHTML;
-          this.dom.btnModalShare.innerHTML = '<span>✔ Link Copied!</span>';
-          setTimeout(() => {
-            this.dom.btnModalShare.innerHTML = original;
-          }, 2000);
-        });
-      }
-    });
+    if (this.dom.btnCloseDetails) {
+      this.dom.btnCloseDetails.addEventListener('click', () => this.closeDetailsModal());
+    }
+    if (this.dom.detailsModal) {
+      this.dom.detailsModal.addEventListener('click', (e) => {
+        if (e.target === this.dom.detailsModal) this.closeDetailsModal();
+      });
+    }
+    if (this.dom.btnModalLaunch) {
+      this.dom.btnModalLaunch.addEventListener('click', () => {
+        const g = this.activeGame;
+        this.closeDetailsModal();
+        if (g) this.launchGame(g);
+      });
+    }
+    if (this.dom.btnModalShare) {
+      this.dom.btnModalShare.addEventListener('click', () => {
+        if (this.activeGame) {
+          const shareUrl = `${window.location.origin}${window.location.pathname}#play=${this.activeGame.id}`;
+          navigator.clipboard.writeText(shareUrl).then(() => {
+            const original = this.dom.btnModalShare.innerHTML;
+            this.dom.btnModalShare.innerHTML = '<span>✔ Link Copied!</span>';
+            setTimeout(() => {
+              this.dom.btnModalShare.innerHTML = original;
+            }, 2000);
+          });
+        }
+      });
+    }
 
     // Spotlight Buttons
-    this.dom.btnSpotlightPlay.addEventListener('click', () => {
-      const featuredGame = this.games.find(g => g.featured) || this.games[0];
-      if (featuredGame) this.launchGame(featuredGame);
-    });
-    this.dom.btnSpotlightDetails.addEventListener('click', () => {
-      const featuredGame = this.games.find(g => g.featured) || this.games[0];
-      if (featuredGame) this.openDetailsModal(featuredGame);
-    });
+    if (this.dom.btnSpotlightPlay) {
+      this.dom.btnSpotlightPlay.addEventListener('click', () => {
+        const featuredGame = this.games.find(g => g.featured) || this.games[0];
+        if (featuredGame) this.launchGame(featuredGame);
+      });
+    }
+    if (this.dom.btnSpotlightDetails) {
+      this.dom.btnSpotlightDetails.addEventListener('click', () => {
+        const featuredGame = this.games.find(g => g.featured) || this.games[0];
+        if (featuredGame) this.openDetailsModal(featuredGame);
+      });
+    }
 
     // Hash change routing
     window.addEventListener('hashchange', () => this.applyRoutingFromHash());
@@ -236,30 +198,13 @@ class GamePortalApp {
       });
     }
 
-    // How to add link
-    const howToAdd = document.getElementById('link-how-to-add');
-    if (howToAdd) {
-      howToAdd.addEventListener('click', (e) => {
-        e.preventDefault();
-        alert("★ HOW TO ADD A RADICAL GAME ★\n1. Place your game folder inside /games/\n2. Add metadata to games.json\n3. Git push! Automated deployment to game.heftyracoon.com!");
-      });
-    }
-
-    // 90s MIDI BGM Player Toggle
-    const midiBtn = document.getElementById('btn-midi-toggle');
-    if (midiBtn) {
-      midiBtn.addEventListener('click', () => {
-        this.midi.toggle(midiBtn);
-      });
-    }
-
     // 90s Guestbook Sign Button
     const guestbookBtn = document.getElementById('btn-guestbook');
     if (guestbookBtn) {
       guestbookBtn.addEventListener('click', () => {
-        const handle = prompt("★ SIGN HEFTY RACCOON'S GUESTBOOK ★\nEnter your Cyber-Handle or AOL Screen Name:", "CyberRaccoon_99");
+        const handle = prompt("★ SIGN HEFTY RACCOON'S GUESTBOOK ★\nEnter your name or screen handle:", "Gamer_2000");
         if (handle) {
-          alert(`★ THANK YOU, ${handle.toUpperCase()}! ★\nYour sign-in has been logged in our CGI-BIN guestbook database! Peace, love & 56k dialup!`);
+          alert(`★ THANK YOU, ${handle.toUpperCase()}! ★\nYour entry was recorded in the guestbook! Keep on gaming!`);
         }
       });
     }
@@ -271,7 +216,7 @@ class GamePortalApp {
       if (link) {
         link.addEventListener('click', (e) => {
           e.preventDefault();
-          alert("❖ SURFING THE INFORMATION SUPERHIGHWAY ❖\nTraveling to the next radical homepage in the Raccoon WebRing!");
+          alert("❖ RACCOON WEBRING ❖\nTraveling to the adjacent homepage on the webring!");
         });
       }
     });
@@ -289,7 +234,7 @@ class GamePortalApp {
 
     if (playId) {
       const game = this.games.find(g => g.id === playId);
-      if (game) this.launchGame(game, false);
+      if (game) this.launchGame(game);
     } else if (detailsId) {
       const game = this.games.find(g => g.id === detailsId);
       if (game) this.openDetailsModal(game);
@@ -299,17 +244,19 @@ class GamePortalApp {
       this.activeCategory = category;
       this.renderCategories();
     }
-    if (search) {
+    if (search && this.dom.searchInput) {
       this.searchQuery = search.toLowerCase();
       this.dom.searchInput.value = search;
     }
   }
 
   renderCategories() {
-    this.dom.categoriesBar.innerHTML = '';
+    if (!this.dom.categoriesBar) return;
+    this.dom.categoriesBar.innerHTML = '<span class="categories-label">Jump to:</span>';
+    
     this.categories.forEach(cat => {
       const btn = document.createElement('button');
-      btn.className = `category-tab ${this.activeCategory === cat.id ? 'active' : ''}`;
+      btn.className = `geo-btn ${this.activeCategory === cat.id ? 'active' : ''}`;
       btn.innerHTML = `<span>${cat.icon || '🎮'}</span> <span>${cat.label}</span>`;
       btn.addEventListener('click', () => {
         this.activeCategory = cat.id;
@@ -324,23 +271,24 @@ class GamePortalApp {
   renderSpotlight() {
     const featured = this.games.find(g => g.featured) || this.games[0];
     if (!featured) {
-      this.dom.heroSection.style.display = 'none';
+      if (this.dom.heroSection) this.dom.heroSection.style.display = 'none';
       return;
     }
 
-    this.dom.heroSection.style.display = 'block';
-    this.dom.spotlightTitle.textContent = featured.title;
-    this.dom.spotlightSubtitle.textContent = featured.subtitle || featured.tagline;
-    this.dom.spotlightDesc.textContent = featured.description;
-    this.dom.spotlightRating.textContent = `${featured.rating || '5.0'} ★`;
-    this.dom.spotlightCategory.textContent = featured.category.toUpperCase();
-    this.dom.spotlightVersion.textContent = `v${featured.version || '1.0'}`;
-    this.dom.spotlightIcon.textContent = featured.icon || '🕹️';
+    if (this.dom.heroSection) this.dom.heroSection.style.display = 'block';
+    if (this.dom.spotlightTitle) this.dom.spotlightTitle.textContent = featured.title;
+    if (this.dom.spotlightSubtitle) this.dom.spotlightSubtitle.textContent = featured.subtitle || featured.tagline;
+    if (this.dom.spotlightDesc) this.dom.spotlightDesc.textContent = featured.description;
+    if (this.dom.spotlightRating) this.dom.spotlightRating.textContent = `${featured.rating || '5.0'} ★`;
+    if (this.dom.spotlightCategory) this.dom.spotlightCategory.textContent = featured.category.toUpperCase();
+    if (this.dom.spotlightIcon) this.dom.spotlightIcon.textContent = featured.icon || '🕹️';
 
-    this.dom.spotlightTags.innerHTML = (featured.tags || [])
-      .slice(0, 4)
-      .map(tag => `<span class="tag-pill">${tag}</span>`)
-      .join('');
+    if (this.dom.spotlightTags) {
+      this.dom.spotlightTags.innerHTML = (featured.tags || [])
+        .slice(0, 4)
+        .map(tag => `<span class="tag-bracket">[${tag}]</span>`)
+        .join(' ');
+    }
   }
 
   getFilteredGames() {
@@ -390,23 +338,24 @@ class GamePortalApp {
     const totalCount = filtered.length;
     
     // Update live count indicator
-    this.dom.resultsCount.innerHTML = `Showing <b>${Math.min(filtered.length, this.itemsPerPage)}</b> of <b>${totalCount}</b> games`;
+    if (this.dom.resultsCount) {
+      this.dom.resultsCount.textContent = `Showing ${Math.min(filtered.length, this.itemsPerPage)} of ${totalCount} games`;
+    }
 
     // Empty state
     if (totalCount === 0) {
       this.dom.gamesGrid.innerHTML = `
-        <div class="empty-catalog">
-          <div class="empty-icon">🔍</div>
-          <h3 class="empty-title">No games found</h3>
-          <p class="empty-desc">We couldn't find any games matching "${this.searchQuery}". Try a different keyword or category.</p>
-          <button class="btn-secondary" id="btn-clear-search">Clear Search Filter</button>
+        <div class="empty-state-box">
+          <p style="font-size: 1.1rem; color: #ffff00; margin-bottom: 8px;"><b>No games found matching "${this.searchQuery}"</b></p>
+          <p style="color: #cccccc; margin-bottom: 12px;">Try searching for a different keyword or resetting your filter.</p>
+          <button class="geo-btn" id="btn-clear-search">Clear Search Filter</button>
         </div>
       `;
       const clearBtn = document.getElementById('btn-clear-search');
       if (clearBtn) {
         clearBtn.addEventListener('click', () => {
           this.searchQuery = '';
-          this.dom.searchInput.value = '';
+          if (this.dom.searchInput) this.dom.searchInput.value = '';
           this.activeCategory = 'all';
           this.renderCategories();
           this.renderCatalog();
@@ -422,79 +371,56 @@ class GamePortalApp {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const pageGames = filtered.slice(startIndex, startIndex + this.itemsPerPage);
 
-    // Render Game Cards
+    // Render Game Entries
     this.dom.gamesGrid.innerHTML = '';
     pageGames.forEach(game => {
       const card = this.createGameCard(game);
       this.dom.gamesGrid.appendChild(card);
     });
 
-    // Render Pagination Controls (Supports arbitrarily large number of games)
+    // Render Pagination Controls
     this.renderPagination(totalPages);
   }
 
   createGameCard(game) {
     const card = document.createElement('article');
-    card.className = 'game-card';
+    card.className = 'game-entry';
     card.setAttribute('data-id', game.id);
 
-    const gradient = game.coverGradient || 'linear-gradient(135deg, #1e3a8a 0%, #4338ca 50%, #6d28d9 100%)';
-    const badgeText = game.badge || (game.featured ? 'FEATURED' : (game.category || 'GAME').toUpperCase());
-    const isHot = game.badge && game.badge.includes('HOT');
+    const tagsHtml = (game.tags || [])
+      .slice(0, 4)
+      .map(t => `<span class="tag-bracket">[${t}]</span>`)
+      .join(' ');
 
     card.innerHTML = `
-      <div class="win95-titlebar">
-        <span>💾 C:\\GAMES\\${game.id.toUpperCase()}.EXE</span>
-        <div class="win95-controls">
-          <span class="win95-btn">_</span>
-          <span class="win95-btn">□</span>
-          <span class="win95-btn">✕</span>
+      <div class="game-thumb-box">${game.icon || '🕹️'}</div>
+      <div class="game-details">
+        <div class="game-header-row">
+          <a class="game-title-link" data-action="play">${game.title}</a>
+          <span class="game-rating-text">${(game.category || 'Arcade').toUpperCase()} • ★ ${game.rating || '5.0'}</span>
         </div>
-      </div>
-
-      <div class="card-inner-box">
-        <div class="card-banner">
-          <div class="card-banner-bg" style="background: ${gradient}"></div>
-          <div class="card-badges">
-            <span class="badge-tag ${isHot ? 'hot' : ''}">${badgeText}</span>
-            <span class="badge-tag rating">★ ${game.rating || '5.0'}</span>
+        <p class="game-summary">${game.description || game.tagline || ''}</p>
+        <div class="tag-list">${tagsHtml}</div>
+        <div class="game-action-bar">
+          <div>
+            <button class="btn-play-primary" data-action="play">▶ PLAY NOW!</button>
+            <button class="geo-btn" data-action="details">ℹ Instructions</button>
           </div>
-          <div class="card-icon-overlay">${game.icon || '🕹️'}</div>
-        </div>
-
-        <div class="card-body">
-          <h3 class="card-title">${game.title}</h3>
-          <p class="card-tagline">${game.tagline || game.subtitle || ''}</p>
-          <p class="card-desc">${game.description || ''}</p>
-
-          <div class="card-tags">
-            ${(game.tags || []).slice(0, 3).map(tag => `<span class="tag-pill">${tag}</span>`).join('')}
-          </div>
-
-          <div class="card-footer">
-            <button class="btn-card-play" data-action="play">
-              <span>▶ PLAY NOW!</span>
-            </button>
-            <button class="btn-card-details" data-action="details" title="View Game Info">
-              <span>Instructions</span>
-            </button>
-          </div>
+          <span style="font-size: 0.8rem; color: #a0c0a0; font-family: var(--font-mono);">Version v${game.version || '1.0'}</span>
         </div>
       </div>
     `;
 
     // Event listeners
-    card.querySelector('[data-action="play"]').addEventListener('click', (e) => {
-      e.stopPropagation();
-      this.launchGame(game);
+    card.querySelectorAll('[data-action="play"]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.launchGame(game);
+      });
     });
 
     card.querySelector('[data-action="details"]').addEventListener('click', (e) => {
       e.stopPropagation();
-      this.openDetailsModal(game);
-    });
-
-    card.addEventListener('click', () => {
       this.openDetailsModal(game);
     });
 
@@ -508,31 +434,30 @@ class GamePortalApp {
     }
 
     let html = `
-      <button class="page-btn" ${this.currentPage === 1 ? 'disabled' : ''} data-page="${this.currentPage - 1}">◀ Prev</button>
+      <button class="geo-btn" ${this.currentPage === 1 ? 'disabled' : ''} data-page="${this.currentPage - 1}">◀ Prev</button>
     `;
 
     for (let i = 1; i <= totalPages; i++) {
-      // Show first, last, and window around current
       if (i === 1 || i === totalPages || (i >= this.currentPage - 1 && i <= this.currentPage + 1)) {
-        html += `<button class="page-btn ${i === this.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+        html += `<button class="geo-btn ${i === this.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
       } else if (i === this.currentPage - 2 || i === this.currentPage + 2) {
-        html += `<span style="color: var(--text-dim); padding: 0 4px;">…</span>`;
+        html += `<span style="padding: 0 4px; color: #aaa;">…</span>`;
       }
     }
 
     html += `
-      <button class="page-btn" ${this.currentPage === totalPages ? 'disabled' : ''} data-page="${this.currentPage + 1}">Next ▶</button>
+      <button class="geo-btn" ${this.currentPage === totalPages ? 'disabled' : ''} data-page="${this.currentPage + 1}">Next ▶</button>
     `;
 
     this.dom.paginationControls.innerHTML = html;
 
-    this.dom.paginationControls.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+    this.dom.paginationControls.querySelectorAll('button[data-page]').forEach(btn => {
       btn.addEventListener('click', () => {
         const page = parseInt(btn.getAttribute('data-page'), 10);
         if (page >= 1 && page <= totalPages && page !== this.currentPage) {
           this.currentPage = page;
           this.renderCatalog();
-          window.scrollTo({ top: this.dom.categoriesBar.offsetTop - 80, behavior: 'smooth' });
+          window.scrollTo({ top: this.dom.categoriesBar.offsetTop - 40, behavior: 'smooth' });
         }
       });
     });
@@ -549,14 +474,14 @@ class GamePortalApp {
     this.dom.modalTitle.textContent = game.title;
     this.dom.modalTagline.textContent = game.tagline || game.subtitle || '';
     this.dom.modalGenre.textContent = (game.category || 'Arcade').toUpperCase();
-    this.dom.modalControls.textContent = game.controls || 'Keyboard / Touch';
+    this.dom.modalControls.textContent = game.controls || 'Keyboard / Mouse / Touch';
     this.dom.modalVersion.textContent = `v${game.version || '1.0.0'}`;
     this.dom.modalDesc.textContent = game.description || 'No description available.';
 
     const features = game.features || [
       'High-performance pure Web execution (Zero installation)',
-      'Responsive design with full touch and keyboard controls',
-      'Modern HTML5, Canvas, and Web Audio API integration'
+      'Full touch and keyboard controls supported',
+      'HTML5 Canvas graphics and sound'
     ];
 
     this.dom.modalFeaturesList.innerHTML = features

@@ -1,30 +1,32 @@
 /* ==========================================================================
-   HEFTY RACCOON'S CYBER ARCADE PALACE - GEOCITIES 1999 EDITION
+   HEFTY RACCOON'S GAMING SHRINE - AUTHENTIC LATE 90s GEOCITIES STYLE
    Domain: game.heftyracoon.com
    ========================================================================== */
 
+/* Authentic 90s System Fonts & Color Palette */
 :root {
-  --geo-bg: #000015;
-  --geo-win-bg: #c0c0c0;
-  --geo-win-border-light: #ffffff;
-  --geo-win-border-dark: #808080;
-  --geo-win-border-black: #000000;
-  --geo-titlebar-blue: linear-gradient(90deg, #000080 0%, #1084d0 100%);
-  --geo-cyan: #00ffff;
-  --geo-magenta: #ff00ff;
+  --geo-page-bg: #000018;
+  --geo-container-bg: #000044;
+  --geo-box-bg: #000066;
+  --geo-sidebar-bg: #000033;
+  --geo-gray: #c0c0c0;
+  --geo-darkgray: #808080;
+  
   --geo-yellow: #ffff00;
-  --geo-lime: #00ff00;
-  --geo-red: #ff0033;
-  --geo-orange: #ff6600;
-
-  --font-comic: 'Comic Sans MS', 'Comic Neue', 'Chalkboard SE', cursive, sans-serif;
-  --font-serif: 'Times New Roman', Times, serif;
-  --font-system: 'MS Sans Serif', Tahoma, 'Segoe UI', sans-serif;
-  --font-impact: 'Impact', 'Arial Black', sans-serif;
-  --font-mono: 'Courier New', Courier, monospace;
+  --geo-cyan: #00ffff;
+  --geo-green: #00ff00;
+  --geo-magenta: #ff00ff;
+  --geo-red: #ff3333;
+  --geo-white: #ffffff;
+  
+  --font-serif: "Times New Roman", Times, Georgia, serif;
+  --font-comic: "Comic Sans MS", "Comic Neue", cursive, sans-serif;
+  --font-header: "Arial Black", "Impact", "Arial", sans-serif;
+  --font-system: "MS Sans Serif", Arial, Helvetica, sans-serif;
+  --font-mono: "Courier New", Courier, monospace;
 }
 
-/* Base Setup & Tiled Cosmic Starfield Background */
+/* Base Reset & Starry Background */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -32,1184 +34,721 @@
 }
 
 html {
-  font-size: 16px;
-  background-color: var(--geo-bg);
-  color: #ffffff;
-  font-family: var(--font-comic);
-  cursor: default;
+  font-size: 15px;
+  background-color: var(--geo-page-bg);
+  color: var(--geo-white);
+  font-family: var(--font-serif);
 }
 
 body {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  background-color: #000010;
+  margin: 0;
+  padding: 12px 6px 30px 6px;
+  background-color: #000014;
+  /* Subtle, authentic tiled starry background */
   background-image: 
-    radial-gradient(1.5px 1.5px at 25px 35px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 50px 75px, #ffff00, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 100px 45px, #00ffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 170px 130px, #ff00ff, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 240px 190px, #ffffff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 310px 95px, #00ff00, rgba(0,0,0,0));
-  background-size: 320px 240px;
+    radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 60px 85px, #ffff00, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 110px 40px, #00ffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 180px 140px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 250px 70px, #00ff00, rgba(0,0,0,0));
+  background-size: 260px 200px;
   background-attachment: fixed;
+  display: flex;
+  justify-content: center;
+}
+
+/* Hyperlinks: Classic 90s browser styling */
+a:link { color: var(--geo-cyan); text-decoration: underline; }
+a:visited { color: var(--geo-magenta); text-decoration: underline; }
+a:hover { color: var(--geo-yellow); text-decoration: underline; }
+a:active { color: var(--geo-red); text-decoration: underline; }
+
+/* Main Centered 90s Layout Container */
+#geocities-container {
+  width: 100%;
+  max-width: 860px;
+  background-color: var(--geo-container-bg);
+  border-top: 3px solid #ffffff;
+  border-left: 3px solid #ffffff;
+  border-right: 3px solid #808080;
+  border-bottom: 3px solid #808080;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+  padding: 14px 18px 24px 18px;
 }
 
 /* ==========================================================================
-   GEOCITIES RETRO MARQUEE & UNDER CONSTRUCTION BAR
+   TOP MARQUEE & HAZARD BANNER
    ========================================================================== */
-.geocities-top-ticker {
-  background: #000000;
-  border-bottom: 2px solid var(--geo-yellow);
+.marquee-bar {
+  background-color: #000080;
   color: var(--geo-yellow);
-  font-family: var(--font-mono);
+  font-family: var(--font-header);
+  font-size: 0.9rem;
   font-weight: bold;
-  font-size: 0.95rem;
-  padding: 5px 0;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 6px var(--geo-yellow);
-  overflow: hidden;
+  border: 1px dashed var(--geo-yellow);
+  padding: 4px 8px;
+  margin-bottom: 12px;
 }
 
-.geocities-top-ticker marquee {
+.marquee-bar marquee {
   display: block;
 }
 
-.construction-hazard-bar {
-  background: repeating-linear-gradient(
-    -45deg,
-    #ffd700,
-    #ffd700 20px,
-    #000000 20px,
-    #000000 40px
-  );
+.construction-banner {
+  background-color: #ffcc00;
   color: #000000;
-  font-family: var(--font-impact);
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0.1em;
+  font-family: var(--font-header);
+  font-size: 0.85rem;
+  font-weight: bold;
   text-align: center;
-  padding: 6px 1rem;
-  border-bottom: 3px solid #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.5rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-}
-
-.construction-inner-pill {
-  background: #ffff00;
+  padding: 4px 8px;
   border: 2px solid #000000;
-  padding: 2px 14px;
-  border-radius: 4px;
-  color: #000000;
-  box-shadow: 2px 2px 0px #000000;
-}
-
-/* Blinking & Flaming Animations */
-@keyframes geoBlink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-.blink-hot {
-  animation: geoBlink 0.9s infinite;
-  color: var(--geo-red);
-  font-weight: 900;
-}
-
-.blink-cool {
-  animation: geoBlink 1.2s infinite;
-  color: var(--geo-cyan);
-  font-weight: 900;
-}
-
-.fire-text {
-  color: #ffff00;
-  text-shadow: 
-    0 0 4px #ffff00,
-    0 -2px 6px #ff6600,
-    2px -4px 10px #ff0000;
-}
-
-/* Rainbow HR Divider */
-.rainbow-hr {
-  height: 6px;
-  border: none;
-  background: linear-gradient(
-    90deg,
-    #ff0000 0%,
-    #ff7700 16%,
-    #ffff00 33%,
-    #00ff00 50%,
-    #00ffff 66%,
-    #0000ff 83%,
-    #ff00ff 100%
-  );
-  margin: 1.2rem 0;
-  box-shadow: 0 0 8px rgba(255, 255, 0, 0.6);
+  margin-bottom: 14px;
+  letter-spacing: 0.05em;
 }
 
 /* ==========================================================================
-   HEADER / NAVIGATION (Windows 95 / Web 1.0 Style)
+   SITE HEADER
    ========================================================================== */
 .site-header {
-  max-width: 1200px;
-  width: 96%;
-  margin: 1.2rem auto 0;
-  background: var(--geo-win-bg);
-  border: 3px outset var(--geo-win-border-light);
-  box-shadow: 6px 6px 0px #000000;
-  padding: 4px;
+  text-align: center;
+  padding-bottom: 12px;
 }
 
-.win95-titlebar {
-  background: var(--geo-titlebar-blue);
-  color: #ffffff;
-  font-family: var(--font-system);
-  font-size: 0.85rem;
-  font-weight: bold;
-  padding: 4px 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  letter-spacing: 0.03em;
-  user-select: none;
-}
-
-.win95-controls {
-  display: flex;
-  gap: 3px;
-}
-
-.win95-btn {
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-family: var(--font-system);
-  font-weight: bold;
-  font-size: 0.75rem;
-  line-height: 1;
-  width: 18px;
-  height: 16px;
+.site-title-row {
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
-.win95-btn:active {
-  border: 2px inset #ffffff;
+.header-logo-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(2px 2px 0 #000);
 }
 
-.header-container {
-  padding: 1rem 1.2rem;
+.site-title {
+  font-family: var(--font-comic);
+  color: var(--geo-yellow);
+  font-size: 1.85rem;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 #000000;
+}
+
+.site-tagline {
+  font-size: 0.95rem;
+  color: #d0d0ff;
+  font-style: italic;
+  margin-bottom: 10px;
+}
+
+.header-meta-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.2rem;
+  justify-content: center;
   flex-wrap: wrap;
-  background: #d4d0c8;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: #cccccc;
+  font-family: var(--font-system);
 }
 
-.brand-link {
+/* Hit Counter */
+.counter-box {
+  background-color: #000000;
+  color: var(--geo-green);
+  font-family: var(--font-mono);
+  font-weight: bold;
+  font-size: 0.95rem;
+  padding: 2px 8px;
+  border-top: 2px solid #505050;
+  border-left: 2px solid #505050;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  letter-spacing: 3px;
+}
+
+/* Horizontal Rule Divider */
+.retro-hr {
+  border: 0;
+  height: 2px;
+  background-color: var(--geo-cyan);
+  margin: 12px 0 16px 0;
+}
+
+/* ==========================================================================
+   NAVIGATION & SEARCH TOOLBAR
+   ========================================================================== */
+.toolbar-box {
+  background-color: var(--geo-sidebar-bg);
+  border: 1px solid #0055aa;
+  padding: 8px 12px;
+  margin-bottom: 16px;
   display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.categories-nav {
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.85rem;
+  gap: 6px;
+}
+
+.categories-label {
+  font-family: var(--font-header);
+  font-size: 0.85rem;
+  color: var(--geo-yellow);
+  margin-right: 4px;
+}
+
+/* 90s Beveled Button */
+.geo-btn {
+  background-color: var(--geo-gray);
+  color: #000000;
+  font-family: var(--font-system);
+  font-size: 0.85rem;
+  font-weight: bold;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #404040;
+  border-bottom: 2px solid #404040;
+  padding: 3px 9px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.geo-btn:hover {
+  background-color: #d8d8d8;
+  color: #000000;
   text-decoration: none;
 }
 
-.brand-logo-img {
-  width: 52px;
-  height: 52px;
-  border: 2px solid #000000;
-  background: #000000;
-  padding: 2px;
-  filter: drop-shadow(2px 2px 0px #808080);
+.geo-btn:active,
+.geo-btn.active {
+  background-color: #a8a8a8;
+  border-top: 2px solid #404040;
+  border-left: 2px solid #404040;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
 }
 
-.brand-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.brand-name {
-  font-family: var(--font-impact);
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
-  color: #000080;
-  text-shadow: 2px 2px 0px #ffffff, 4px 4px 0px #808080;
-}
-
-.brand-tag {
-  font-family: var(--font-comic);
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #ff0000;
-}
-
-/* Quick Search Input */
-.header-center {
-  flex: 1;
-  min-width: 260px;
-}
-
-.quick-search-box {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 10px;
-  font-size: 1.1rem;
-  pointer-events: none;
-}
-
-.search-input {
-  width: 100%;
-  padding: 0.55rem 3rem 0.55rem 2.4rem;
-  background: #ffffff;
-  border: 2px inset #808080;
-  color: #000000;
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: bold;
-}
-
-.search-input:focus {
-  outline: 2px solid var(--geo-cyan);
-  background: #fffff0;
-}
-
-.search-kbd {
-  position: absolute;
-  right: 10px;
-  background: #e0e0e0;
-  border: 1px solid #000000;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  padding: 1px 6px;
-  color: #000000;
-}
-
-/* Header Right Buttons */
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.stat-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.4rem 0.8rem;
-  background: #000000;
-  border: 2px inset #808080;
-  color: var(--geo-lime);
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  font-weight: bold;
-}
-
-.live-pulse {
-  width: 10px;
-  height: 10px;
-  background: var(--geo-lime);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--geo-lime);
-  animation: geoBlink 1s infinite;
-}
-
-.btn-header-action {
-  padding: 0.45rem 0.9rem;
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-family: var(--font-system);
-  font-weight: bold;
-  font-size: 0.85rem;
-  cursor: pointer;
-  box-shadow: 2px 2px 0px #000000;
-}
-
-.btn-header-action:active {
-  border: 2px inset #ffffff;
-  transform: translate(1px, 1px);
-}
-
-/* ==========================================================================
-   HERO / SPOTLIGHT SECTION (Retro WordArt & Windows 95 Dialog)
-   ========================================================================== */
-.hero-section {
-  max-width: 1200px;
-  width: 96%;
-  margin: 1.5rem auto 0;
-}
-
-.spotlight-card {
-  background: var(--geo-win-bg);
-  border: 3px outset #ffffff;
-  box-shadow: 6px 6px 0px #000000;
-  padding: 4px;
-}
-
-.spotlight-inner {
-  background: #000033;
-  border: 2px inset #808080;
-  padding: 1.8rem;
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 2rem;
-  align-items: center;
-  color: #ffffff;
-}
-
-.spotlight-badge {
-  display: inline-block;
-  padding: 4px 12px;
-  background: #ff0000;
-  color: #ffff00;
-  font-family: var(--font-impact);
-  font-size: 0.85rem;
-  letter-spacing: 0.08em;
-  border: 2px solid #ffff00;
-  box-shadow: 3px 3px 0px #000000;
-  margin-bottom: 0.85rem;
-}
-
-.spotlight-title {
-  font-family: var(--font-impact);
-  font-size: 2.5rem;
-  line-height: 1.1;
-  letter-spacing: 0.03em;
-  color: #ffff00;
-  text-shadow: 
-    3px 3px 0px #ff0000,
-    6px 6px 0px #000000;
-  margin-bottom: 0.5rem;
-}
-
-.spotlight-subtitle {
-  font-family: var(--font-comic);
-  font-size: 1.1rem;
-  color: var(--geo-cyan);
-  font-weight: bold;
-  margin-bottom: 0.85rem;
-  text-shadow: 1px 1px 2px #000000;
-}
-
-.spotlight-desc {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: #e0e0ff;
-  margin-bottom: 1.2rem;
-  background: rgba(0, 0, 0, 0.4);
-  padding: 0.8rem;
-  border-left: 4px solid var(--geo-yellow);
-}
-
-.spotlight-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.tag-pill {
-  padding: 3px 10px;
-  background: #111166;
-  border: 1px solid var(--geo-cyan);
-  color: var(--geo-cyan);
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-.spotlight-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-/* Retro Chunky Buttons */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: linear-gradient(180deg, #ff3300 0%, #cc0000 100%);
-  color: #ffff00 !important;
-  font-family: var(--font-impact);
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
-  padding: 0.75rem 1.8rem;
-  border: 3px outset #ffcc00;
-  cursor: pointer;
-  box-shadow: 4px 4px 0px #000000;
-  text-shadow: 2px 2px 0px #000000;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(180deg, #ff6600 0%, #ff0000 100%);
-  transform: scale(1.02);
-}
-
-.btn-primary:active {
-  border: 3px inset #ffcc00;
-  transform: translate(2px, 2px);
-}
-
-.btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: var(--geo-win-bg);
-  color: #000000 !important;
-  font-family: var(--font-comic);
-  font-size: 0.95rem;
-  font-weight: bold;
-  padding: 0.75rem 1.4rem;
-  border: 3px outset #ffffff;
-  cursor: pointer;
-  box-shadow: 3px 3px 0px #000000;
-}
-
-.btn-secondary:active {
-  border: 3px inset #ffffff;
-  transform: translate(1px, 1px);
-}
-
-/* Spotlight Preview Box */
-.spotlight-preview {
-  background: #000000;
-  border: 3px ridge var(--geo-yellow);
-  padding: 1.5rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.spotlight-icon-huge {
-  font-size: 4.5rem;
-  margin-bottom: 0.5rem;
-  filter: drop-shadow(0 0 10px #ff00ff);
-  animation: geoWiggle 2s infinite ease-in-out;
-}
-
-@keyframes geoWiggle {
-  0%, 100% { transform: rotate(0deg); }
-  25% { transform: rotate(-5deg); }
-  75% { transform: rotate(5deg); }
-}
-
-.spotlight-preview-stats {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  background: #111122;
-  padding: 6px 12px;
-  border: 1px dashed var(--geo-cyan);
-}
-
-.spotlight-stat {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.stat-value {
-  font-family: var(--font-impact);
-  font-size: 1.15rem;
-  color: var(--geo-yellow);
-}
-
-.stat-label {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--geo-cyan);
-  text-transform: uppercase;
-}
-
-/* ==========================================================================
-   TOOLBAR & CATEGORY FILTER TABS
-   ========================================================================== */
-.controls-section {
-  max-width: 1200px;
-  width: 96%;
-  margin: 1.5rem auto 0;
-  background: var(--geo-win-bg);
-  border: 3px outset #ffffff;
-  box-shadow: 6px 6px 0px #000000;
-  padding: 4px;
-}
-
-.controls-inner {
-  background: #e4e0d8;
-  padding: 1rem;
-  border: 2px inset #808080;
-}
-
-.categories-bar {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  overflow-x: auto;
-  padding-bottom: 0.6rem;
-  margin-bottom: 0.8rem;
-  border-bottom: 2px groove #ffffff;
-}
-
-.category-tab {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1rem;
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-family: var(--font-comic);
-  font-size: 0.9rem;
-  font-weight: bold;
-  white-space: nowrap;
-  cursor: pointer;
-  box-shadow: 2px 2px 0px #000000;
-}
-
-.category-tab:hover {
-  background: #ffffcc;
-}
-
-.category-tab.active {
-  background: #000080;
-  border: 2px inset #ffffff;
-  color: #ffff00;
-  transform: translate(1px, 1px);
-}
-
-.toolbar-secondary {
+.search-sort-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 1rem;
   flex-wrap: wrap;
-  padding-top: 0.4rem;
+  gap: 10px;
+  border-top: 1px dashed #004488;
+  padding-top: 8px;
 }
 
-.results-count {
-  font-family: var(--font-mono);
-  font-size: 0.95rem;
-  font-weight: bold;
-  color: #000080;
-}
-
-.toolbar-actions {
+.search-group {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 6px;
+  font-family: var(--font-system);
+  font-size: 0.85rem;
+}
+
+.search-input {
+  background-color: #ffffff;
+  color: #000000;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border: 2px inset #808080;
+  padding: 3px 6px;
+  width: 170px;
 }
 
 .sort-group {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 6px;
   font-family: var(--font-system);
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #000000;
+  font-size: 0.85rem;
 }
 
 .sort-select {
-  background: #ffffff;
-  border: 2px inset #808080;
+  background-color: #ffffff;
   color: #000000;
   font-family: var(--font-system);
-  font-weight: bold;
-  padding: 0.35rem 0.75rem;
-  cursor: pointer;
+  font-size: 0.85rem;
+  border: 2px inset #808080;
+  padding: 2px 4px;
 }
 
-.view-mode-toggle {
-  display: flex;
-  gap: 2px;
-}
-
-.view-btn {
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-weight: bold;
-  padding: 0.35rem 0.65rem;
-  cursor: pointer;
-}
-
-.view-btn.active {
-  border: 2px inset #ffffff;
-  background: #e0e0e0;
+.results-count-text {
+  font-size: 0.85rem;
+  color: #aaccff;
+  font-style: italic;
 }
 
 /* ==========================================================================
-   CATALOG GRID & CARDS (Windows 95 Windowed Game Modules)
+   FEATURED SPOTLIGHT BOX
    ========================================================================== */
-.catalog-section {
-  max-width: 1200px;
-  width: 96%;
-  margin: 1.5rem auto 2.5rem;
-  flex: 1;
+.spotlight-box {
+  background-color: var(--geo-box-bg);
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  padding: 12px;
+  margin-bottom: 20px;
 }
 
-.games-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 1.8rem;
-}
-
-/* Game Card styled like a Windows 95 Window */
-.game-card {
-  background: var(--geo-win-bg);
-  border: 3px outset var(--geo-win-border-light);
-  box-shadow: 6px 6px 0px #000000;
-  padding: 4px;
+.spotlight-header-bar {
+  background-color: #000080;
+  color: var(--geo-yellow);
+  font-family: var(--font-header);
+  font-size: 0.95rem;
+  font-weight: bold;
+  padding: 4px 8px;
+  margin-bottom: 10px;
   display: flex;
-  flex-direction: column;
-  transition: transform 0.15s ease;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.game-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 8px 8px 0px #ff00ff;
+.spotlight-body {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
 }
 
-.card-inner-box {
-  background: #000022;
+.spotlight-thumb {
+  flex-shrink: 0;
+  width: 110px;
+  height: 110px;
+  background-color: #000022;
   border: 2px inset #808080;
   display: flex;
   flex-direction: column;
-  flex: 1;
-  color: #ffffff;
-}
-
-.card-banner {
-  position: relative;
-  height: 160px;
-  display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  border-bottom: 2px solid var(--geo-yellow);
+  font-size: 2.8rem;
+  text-align: center;
 }
 
-.card-banner-bg {
-  position: absolute;
-  inset: 0;
-  opacity: 0.85;
+.spotlight-info {
+  flex: 1;
 }
 
-.card-icon-overlay {
-  position: relative;
-  font-size: 3.8rem;
-  filter: drop-shadow(2px 2px 0px #000000);
+.spotlight-title {
+  font-family: var(--font-comic);
+  font-size: 1.35rem;
+  color: var(--geo-cyan);
+  margin-bottom: 4px;
 }
 
-.card-badges {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  right: 8px;
+.spotlight-subtitle {
+  font-size: 0.9rem;
+  color: #ffcc00;
+  margin-bottom: 6px;
+}
+
+.spotlight-desc {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #f0f0f0;
+  margin-bottom: 10px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.tag-bracket {
+  background-color: #000022;
+  color: var(--geo-yellow);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 1px 5px;
+  border: 1px solid #0055aa;
+}
+
+.spotlight-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-play-primary {
+  background-color: #00aa00;
+  color: #ffffff;
+  font-family: var(--font-header);
+  font-size: 0.95rem;
+  font-weight: bold;
+  border-top: 2px solid #88ff88;
+  border-left: 2px solid #88ff88;
+  border-right: 2px solid #004400;
+  border-bottom: 2px solid #004400;
+  padding: 5px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-play-primary:hover {
+  background-color: #00cc00;
+}
+
+.btn-play-primary:active {
+  border-top: 2px solid #004400;
+  border-left: 2px solid #004400;
+  border-right: 2px solid #88ff88;
+  border-bottom: 2px solid #88ff88;
+}
+
+/* ==========================================================================
+   GAME DIRECTORY / CATALOG
+   ========================================================================== */
+.section-title-bar {
+  background-color: #000080;
+  color: var(--geo-white);
+  font-family: var(--font-header);
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  margin-bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 2;
 }
 
-.badge-tag {
-  font-family: var(--font-impact);
-  font-size: 0.8rem;
-  letter-spacing: 0.05em;
-  padding: 2px 8px;
-  background: #ffff00;
-  color: #000000;
-  border: 1px solid #000000;
-  box-shadow: 2px 2px 0px #000000;
-}
-
-.badge-tag.hot {
-  background: #ff0000;
-  color: #ffff00;
-}
-
-.badge-tag.rating {
-  background: #000000;
-  color: #ffff00;
-  border-color: #ffff00;
-}
-
-/* Card Body */
-.card-body {
-  padding: 1.2rem;
+.games-container {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 12px;
 }
 
-.card-title {
-  font-family: var(--font-impact);
-  font-size: 1.45rem;
-  letter-spacing: 0.03em;
-  color: #ffff00;
-  text-shadow: 2px 2px 0px #ff0033;
-  margin-bottom: 0.35rem;
-}
-
-.card-tagline {
-  font-family: var(--font-comic);
-  font-size: 0.88rem;
-  color: var(--geo-cyan);
-  font-weight: bold;
-  margin-bottom: 0.75rem;
-}
-
-.card-desc {
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  line-height: 1.45;
-  color: #d0d0ff;
-  margin-bottom: 1rem;
-  flex: 1;
-}
-
-.card-tags {
+/* Authentic 90s Game Entry */
+.game-entry {
+  background-color: var(--geo-box-bg);
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  padding: 10px 14px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.35rem;
-  margin-bottom: 1.2rem;
+  gap: 14px;
+  align-items: flex-start;
 }
 
-.card-footer {
+.game-thumb-box {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  background-color: #000022;
+  border: 2px inset #808080;
   display: flex;
-  gap: 0.75rem;
-  margin-top: auto;
-  padding-top: 0.8rem;
-  border-top: 1px dashed #ffffff;
-}
-
-.btn-card-play {
-  flex: 1;
-  display: inline-flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  background: #ff0000;
-  color: #ffff00 !important;
-  font-family: var(--font-impact);
-  font-size: 1.15rem;
-  letter-spacing: 0.05em;
-  padding: 0.65rem 1rem;
-  border: 3px outset #ffcc00;
-  cursor: pointer;
-  box-shadow: 3px 3px 0px #000000;
-  text-shadow: 1px 1px 0px #000000;
-}
-
-.btn-card-play:hover {
-  background: #ff3300;
-  transform: scale(1.02);
-}
-
-.btn-card-play:active {
-  border: 3px inset #ffcc00;
-  transform: translate(2px, 2px);
-}
-
-.btn-card-details {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.65rem 0.9rem;
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-family: var(--font-comic);
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 2px 2px 0px #000000;
-}
-
-.btn-card-details:active {
-  border: 2px inset #ffffff;
-  transform: translate(1px, 1px);
-}
-
-/* Empty State */
-.empty-catalog {
-  background: var(--geo-win-bg);
-  border: 3px outset #ffffff;
-  padding: 2.5rem;
+  font-size: 2.2rem;
   text-align: center;
-  color: #000000;
-  box-shadow: 6px 6px 0px #000000;
-  grid-column: 1 / -1;
 }
 
-.empty-title {
-  font-family: var(--font-impact);
-  font-size: 1.8rem;
-  color: #ff0000;
-  margin-bottom: 0.5rem;
+.game-details {
+  flex: 1;
 }
 
-.empty-desc {
-  font-family: var(--font-comic);
-  font-size: 1.05rem;
-  margin-bottom: 1.2rem;
-}
-
-/* Pagination */
-.pagination-container {
+.game-header-row {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
-.page-btn {
-  padding: 0.45rem 0.85rem;
-  background: var(--geo-win-bg);
-  border: 2px outset #ffffff;
-  color: #000000;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
+.game-title-link {
+  font-family: var(--font-comic);
+  font-size: 1.25rem;
   font-weight: bold;
-  box-shadow: 2px 2px 0px #000000;
+  color: var(--geo-cyan);
   cursor: pointer;
 }
 
-.page-btn.active {
-  background: #000080;
-  color: #ffff00;
-  border: 2px inset #ffffff;
+.game-rating-text {
+  font-family: var(--font-system);
+  font-size: 0.85rem;
+  color: var(--geo-green);
+  font-weight: bold;
 }
 
-.page-btn:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+.game-summary {
+  font-size: 0.95rem;
+  color: #eeeeee;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.game-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-top: 1px dashed #004488;
+  padding-top: 6px;
+}
+
+.empty-state-box {
+  background-color: var(--geo-box-bg);
+  border: 2px dashed #0088ff;
+  padding: 24px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* Pagination Row */
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-family: var(--font-system);
 }
 
 /* ==========================================================================
-   GEOCITIES RETRO FOOTER, HIT COUNTER, WEBRING & 88x31 BADGES
+   AUTHENTIC 90s FOOTER
    ========================================================================== */
 .site-footer {
-  margin-top: auto;
-  background: var(--geo-win-bg);
-  border-top: 3px solid #ffffff;
-  border-bottom: 3px solid #000000;
-  padding: 4px;
-}
-
-.footer-inner-box {
-  background: #111122;
-  border: 3px inset #808080;
-  padding: 2rem 1.5rem;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.5rem;
+  margin-top: 24px;
+  border-top: 2px solid var(--geo-cyan);
+  padding-top: 16px;
   text-align: center;
 }
 
-/* 90s Electronic Visitor Counter */
-.hit-counter-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  background: #000000;
-  border: 3px ridge #ffff00;
-  padding: 0.8rem 1.6rem;
-  box-shadow: 0 0 15px rgba(255, 255, 0, 0.4);
+.footer-section {
+  margin-bottom: 16px;
 }
 
-.hit-counter-label {
-  font-family: var(--font-impact);
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: var(--geo-yellow);
-}
-
-.odometer-digits {
-  display: flex;
-  gap: 3px;
-  background: #111111;
-  padding: 4px;
-  border: 2px inset #444444;
-}
-
-.odometer-digit {
-  background: #000000;
-  color: var(--geo-lime);
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  font-weight: 900;
-  line-height: 1;
-  padding: 4px 6px;
-  border: 1px solid #333333;
-  box-shadow: inset 0 0 6px rgba(0, 255, 0, 0.6);
-}
-
-/* WebRing Widget */
-.webring-box {
-  background: #000080;
-  border: 3px ridge #ffffff;
-  padding: 0.8rem 1.5rem;
-  max-width: 650px;
-  width: 100%;
+/* WebRing Box */
+.webring-table {
+  display: inline-table;
+  background-color: #000033;
+  border: 2px outset #ffffff;
+  padding: 6px 14px;
+  font-family: var(--font-system);
+  font-size: 0.85rem;
+  margin: 10px auto;
 }
 
 .webring-title {
-  font-family: var(--font-impact);
-  font-size: 1.05rem;
-  letter-spacing: 0.05em;
-  color: #ffff00;
-  margin-bottom: 0.4rem;
-}
-
-.webring-links {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-comic);
-  font-size: 0.9rem;
-  font-weight: bold;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.webring-links a {
-  color: #ffffff;
-  text-decoration: underline;
-}
-
-.webring-links a:hover {
   color: var(--geo-yellow);
+  font-weight: bold;
+  margin-bottom: 4px;
 }
 
-/* 88x31 Web 1.0 Buttons */
-.badges-row {
+/* 88x31 Badges Row */
+.badges-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
 }
 
 .badge-88x31 {
   width: 88px;
   height: 31px;
-  border: 2px outset #ffffff;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 900;
+  border: 1px solid #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-system);
+  font-size: 8px;
+  font-weight: bold;
   line-height: 1.1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   text-align: center;
-  text-transform: uppercase;
   user-select: none;
-  box-shadow: 2px 2px 0px #000000;
-  cursor: pointer;
 }
 
-.badge-88x31.netscape {
-  background: #000080;
-  color: #00ffff;
-  border-color: #00ffff;
-}
-
-.badge-88x31.notepad {
-  background: #ffffcc;
-  color: #000000;
-  border-color: #000000;
-}
-
-.badge-88x31.res800 {
-  background: #ff0000;
+.badge-netscape {
+  background-color: #000088;
   color: #ffffff;
 }
+.badge-netscape b { color: #00ffff; }
 
-.badge-88x31.nocookies {
-  background: #006600;
+.badge-notepad {
+  background-color: #ffffff;
+  color: #000000;
+}
+.badge-notepad b { color: #000088; }
+
+.badge-ie {
+  background-color: #003366;
+  color: #ffffff;
+}
+.badge-ie b { color: #ffff00; }
+
+.badge-res {
+  background-color: #000000;
   color: #00ff00;
-  border-color: #00ff00;
 }
 
-.badge-88x31.ie {
-  background: #003399;
-  color: #ffffff;
-}
-
-/* Guestbook & Audio Tool Bar */
-.retro-extras-bar {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.btn-guestbook {
-  background: linear-gradient(180deg, #ff9900 0%, #cc6600 100%);
-  color: #000000;
-  font-family: var(--font-impact);
-  font-size: 1rem;
-  padding: 0.5rem 1.2rem;
-  border: 3px outset #ffffff;
-  cursor: pointer;
-  box-shadow: 3px 3px 0px #000000;
-}
-
-.btn-midi-toggle {
-  background: var(--geo-win-bg);
-  border: 3px outset #ffffff;
-  font-family: var(--font-system);
-  font-weight: bold;
+.footer-disclaimer {
   font-size: 0.85rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  box-shadow: 3px 3px 0px #000000;
+  color: #a0a0cc;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.footer-links-row {
+  font-family: var(--font-system);
+  font-size: 0.85rem;
+  display: flex;
+  justify-content: center;
+  gap: 16px;
 }
 
 /* ==========================================================================
-   DETAILS MODAL (Windows 95 Dialog Box)
+   SIMPLE 90s INFO MODAL (Clean Windows 95 Dialog Style)
    ========================================================================== */
-.modal-backdrop {
+.modal-overlay {
+  display: none;
   position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.75);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+
+.modal-overlay.active {
+  display: flex;
+}
+
+.win-dialog {
+  background-color: var(--geo-gray);
+  color: #000000;
+  border-top: 2px solid #ffffff;
+  border-left: 2px solid #ffffff;
+  border-right: 2px solid #000000;
+  border-bottom: 2px solid #000000;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.8);
+  width: 100%;
+  max-width: 500px;
+  font-family: var(--font-system);
+}
+
+.win-titlebar {
+  background-color: #000080;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 0.9rem;
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.win-close-btn {
+  background-color: var(--geo-gray);
+  color: #000000;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #404040;
+  border-bottom: 1px solid #404040;
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
+  cursor: pointer;
 }
 
-.modal-backdrop.active {
-  opacity: 1;
-  pointer-events: auto;
+.win-content {
+  padding: 14px;
 }
 
-.modal-dialog {
-  background: var(--geo-win-bg);
-  border: 3px outset #ffffff;
-  max-width: 600px;
+.win-meta-table {
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 8px 8px 0px #000000;
-  padding: 4px;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
 }
 
-.modal-header-banner {
-  background: #ffffcc;
-  border: 2px inset #808080;
-  padding: 1.2rem;
-  color: #000000;
-  margin-top: 4px;
+.win-meta-table td {
+  padding: 3px 6px;
+  border: 1px solid #999999;
 }
 
-.modal-title {
-  font-family: var(--font-impact);
-  font-size: 1.75rem;
-  color: #ff0000;
-  margin-bottom: 0.3rem;
-}
-
-.modal-tagline {
-  font-family: var(--font-comic);
-  font-size: 0.95rem;
+.win-meta-table td.label {
+  background-color: #d0d0d0;
   font-weight: bold;
-  color: #000080;
+  width: 25%;
 }
 
-.modal-content-body {
-  padding: 1.2rem;
-  background: #ffffff;
-  border: 2px inset #808080;
-  margin: 6px 0;
-  color: #000000;
+.win-footer-btns {
   display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-}
-
-.modal-meta-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  background: #f0f0f0;
-  padding: 0.75rem;
-  border: 1px solid #808080;
-}
-
-.meta-label {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: #666666;
-  text-transform: uppercase;
-}
-
-.meta-val {
-  font-family: var(--font-system);
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: #000080;
-}
-
-.modal-features-list {
-  list-style-type: square;
-  padding-left: 1.5rem;
-  font-family: var(--font-serif);
-  font-size: 0.95rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.modal-footer {
-  padding: 0.8rem 0 0.4rem;
-  display: flex;
-  align-items: center;
   justify-content: flex-end;
-  gap: 0.8rem;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN
+   MOBILE RESPONSIVENESS (Preserve 90s aesthetic on small screens)
    ========================================================================== */
-@media (max-width: 900px) {
-  .spotlight-inner {
-    grid-template-columns: 1fr;
+@media (max-width: 640px) {
+  body {
+    padding: 6px;
   }
-  .spotlight-preview {
-    display: none;
+
+  #geocities-container {
+    padding: 10px;
   }
-  .games-grid {
-    grid-template-columns: 1fr;
+
+  .site-title {
+    font-size: 1.4rem;
+  }
+
+  .spotlight-body,
+  .game-entry {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .spotlight-thumb,
+  .game-thumb-box {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
+  }
+
+  .search-sort-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-input {
+    width: 100%;
   }
 }
