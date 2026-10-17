@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Abyssal Vault: Sunken Treasure</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Main 2D Canvas -->
+        <canvas id="game-canvas"></canvas>
+
+        <!-- =========================================
+             HOME SCREEN (EXPEDITION COMMAND)
+             ========================================= -->
+        <div id="home-screen" class="screen-overlay">
+            <!-- Top Status Bar: Rank & Wallet -->
+            <div class="home-top-bar">
+                <div id="home-rank-badge" class="home-chip">
+                    <span>🪣</span> <b>RANK: CABIN BOY</b>
+                </div>
+                <div id="home-wallet-badge" class="home-chip wallet">
+                    <span>🪙</span> <b>0 DOUBLOONS</b>
+                </div>
+            </div>
+
+            <div class="home-title-box">
+                <h1 class="game-title">ABYSSAL VAULT</h1>
+                <p class="game-subtitle">EXPEDITION COMMAND & DEEP SEA SALVAGE</p>
+            </div>
+
+            <!-- Shipwreck Target Selection -->
+            <div class="mission-select-box">
+                <div class="mission-select-label">
+                    <span>SELECT TARGET SHIPWRECK:</span>
+                    <span id="selected-ship-label" style="color: #38bdf8;">PIRATE GALLEON</span>
+                </div>
+                <div class="ship-buttons-grid">
+                    <button id="ship-select-pirate" class="pixel-btn ship-btn active">
+                        🏴‍☠️ PIRATE SHIP
+                    </button>
+                    <button id="ship-select-titanic" class="pixel-btn ship-btn">
+                        🚢 TITANIC
+                    </button>
+                    <button id="ship-select-plane" class="pixel-btn ship-btn">
+                        🛩️ PLANE WRECK
+                    </button>
+                </div>
+            </div>
+
+            <!-- Home Menu Grid -->
+            <div class="home-menu-grid">
+                <button id="btn-home-dive" class="pixel-btn home-dive-btn">
+                    ▶ DIVE EXPEDITION
+                </button>
+                <button id="btn-home-shop" class="pixel-btn btn-gold">
+                    🛒 DRYDOCK SHOP
+                </button>
+                <button id="btn-home-ranks" class="pixel-btn btn-purple">
+                    🎖️ CAPTAIN'S LOG
+                </button>
+                <button id="btn-home-settings" class="pixel-btn">
+                    ⚙ SETTINGS & GRADE
+                </button>
+                <button id="btn-home-instructions" class="pixel-btn">
+                    📜 HOW TO PLAY
+                </button>
+            </div>
+
+            <div id="home-grade-badge" class="current-grade-badge">
+                🐬 GRADE 3: MULTIPLICATION & DIVISION (CHANGE IN SETTINGS)
+            </div>
+        </div>
+
+        <!-- =========================================
+             IN-GAME HUD
+             ========================================= -->
+        <div id="hud-overlay" class="hidden">
+            <div class="hud-top-bar">
+                <!-- Gauges: Health, Oxygen, Boost -->
+                <div class="hud-gauges">
+                    <div class="gauge-row">
+                        <span class="gauge-label">HULL</span>
+                        <div class="gauge-bar-bg"><div id="hud-health-bar" class="gauge-fill health"></div></div>
+                    </div>
+                    <div class="gauge-row">
+                        <span class="gauge-label">O₂</span>
+                        <div class="gauge-bar-bg"><div id="hud-oxygen-bar" class="gauge-fill oxygen"></div></div>
+                    </div>
+                    <div class="gauge-row">
+                        <span class="gauge-label">BOOST</span>
+                        <div class="gauge-bar-bg"><div id="hud-boost-bar" class="gauge-fill boost"></div></div>
+                    </div>
+                </div>
+
+                <!-- Center Depth, Mission, and Oxygen Notification -->
+                <div class="hud-center-stats">
+                    <div id="hud-depth" class="hud-depth-box">0m</div>
+                    <div id="hud-objective" class="hud-objective-text">MISSION: DIVE TO SHIPWRECK</div>
+                    <div id="hud-oxygen-recharge" class="hud-oxygen-recharge hidden">🫧 O₂ RECHARGING...</div>
+                </div>
+
+                <!-- Right Stats: Coins, Ammo, Score, Home & Settings -->
+                <div class="hud-right-stats">
+                    <div class="hud-items-row">
+                        <span id="hud-coins">🪙 0</span>
+                        <span id="hud-torpedo-count">🚀 × 3</span>
+                        <span id="hud-score">SCORE: 0</span>
+                        <button id="hud-home-btn" class="pixel-btn hud-icon-btn btn-danger" title="Return to Home">🏠</button>
+                        <button id="hud-settings-btn" class="pixel-btn hud-icon-btn" title="Settings">⚙</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Danger Alarm (Phase 3) -->
+            <div id="monster-proximity-bar" class="hidden">
+                ⚠ LEVIATHAN PROXIMITY: 150m ⚠
+            </div>
+        </div>
+
+        <!-- =========================================
+             TOUCH CONTROLS (Mobile / Tablet / Mouse)
+             ========================================= -->
+        <div id="touch-controls" class="hidden">
+            <div class="touch-dpad">
+                <div></div>
+                <div id="touch-up" class="touch-btn">▲</div>
+                <div></div>
+                <div id="touch-left" class="touch-btn">◀</div>
+                <div id="touch-down" class="touch-btn">▼</div>
+                <div id="touch-right" class="touch-btn">▶</div>
+            </div>
+
+            <div class="touch-actions">
+                <button id="touch-sonar" class="pixel-btn touch-action-btn">
+                    <span>📡</span>SONAR
+                </button>
+                <button id="touch-torpedo" class="pixel-btn touch-action-btn btn-danger">
+                    <span>🚀</span>FIRE
+                </button>
+                <button id="touch-boost" class="pixel-btn touch-action-btn btn-gold">
+                    <span>⚡</span>BOOST
+                </button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             TREASURE CHEST / SAFE MATH VAULT MODAL
+             ========================================= -->
+        <div id="vault-overlay" class="screen-overlay hidden">
+            <div class="vault-chest-frame">
+                <h2 id="vault-title" class="vault-title">👑 CURSED CHEST CIPHER 👑</h2>
+                <p id="vault-subtitle" class="vault-subtitle">SOLVE THE ANCIENT EQUATIONS TO UNLOCK THE TREASURE</p>
+                <div id="vault-req-banner" class="vault-req-badge">REQUIREMENT: AT LEAST 3 OF 4 CORRECT (MAX 1 MISS ALLOWED)</div>
+
+                <!-- Locks Progress -->
+                <div id="vault-locks" class="vault-locks-row"></div>
+
+                <!-- Equation Display -->
+                <div class="vault-display-box">
+                    <div id="vault-equation" class="vault-equation">...</div>
+                </div>
+
+                <!-- 4 Options Grid -->
+                <div id="vault-options" class="vault-options-grid"></div>
+
+                <!-- Hint Area -->
+                <div id="vault-hint" class="vault-hint-box hidden"></div>
+                <button id="vault-hint-btn" class="pixel-btn">Need a Hint?</button>
+
+                <!-- Feedback Banner -->
+                <div id="vault-feedback" class="vault-feedback"></div>
+            </div>
+        </div>
+
+        <!-- =========================================
+             COSMETICS SHOP MODAL (THE DRYDOCK)
+             ========================================= -->
+        <div id="shop-modal" class="screen-overlay hidden">
+            <div class="modal-dialog">
+                <h3 class="modal-header">🛒 DRYDOCK CUSTOMIZATION SHOP</h3>
+
+                <div class="shop-balance-banner">
+                    <span>AVAILABLE FUNDS:</span>
+                    <span id="shop-balance-text">🪙 0 DOUBLOONS</span>
+                </div>
+
+                <div class="shop-tabs">
+                    <button id="shop-tab-skins" class="pixel-btn shop-tab-btn active">HULL PAINT JOBS</button>
+                    <button id="shop-tab-lights" class="pixel-btn shop-tab-btn">SEARCHLIGHTS</button>
+                </div>
+
+                <div id="shop-items-container" class="shop-items-grid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <button id="shop-close-btn" class="pixel-btn btn-gold">◀ BACK TO BASE</button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             CAPTAIN'S LOG & RANKS PROGRESSION MODAL
+             ========================================= -->
+        <div id="ranks-modal" class="screen-overlay hidden">
+            <div class="modal-dialog">
+                <h3 class="modal-header">🎖️ CAPTAIN'S LOG & RANK PROGRESSION</h3>
+
+                <div class="rank-display-card">
+                    <div class="current-rank-header">
+                        <span id="log-rank-name">🪣 RANK: CABIN BOY</span>
+                        <span id="log-victories-count">VICTORIES: 0</span>
+                    </div>
+
+                    <div class="xp-progress-container">
+                        <div id="log-xp-bar" class="xp-progress-fill" style="width: 10%;"></div>
+                        <div id="log-xp-text" class="xp-progress-text">0 / 500 XP</div>
+                    </div>
+                </div>
+
+                <div style="font-size: 8px; color: #94a3b8; text-align: left;">
+                    Earn more rank points for higher math accuracy, deeper dives, and escaping faster! Higher grade levels grant XP multipliers.
+                </div>
+
+                <div id="rank-roadmap-container" class="rank-tier-list">
+                    <!-- Populated dynamically via JS -->
+                </div>
+
+                <button id="ranks-close-btn" class="pixel-btn btn-gold">◀ BACK TO BASE</button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             SETTINGS MODAL (With Grade Selection)
+             ========================================= -->
+        <div id="settings-modal" class="screen-overlay hidden">
+            <div class="modal-dialog">
+                <h3 class="modal-header">⚙ MISSION SETTINGS</h3>
+
+                <!-- Grade Selection (Required Feature) -->
+                <div class="form-group">
+                    <label class="form-label" for="settings-grade-select">MATH GRADE LEVEL:</label>
+                    <select id="settings-grade-select" class="pixel-select"></select>
+                    <div id="settings-grade-desc" class="grade-desc-box"></div>
+                </div>
+
+                <!-- Problem Count -->
+                <div class="form-group">
+                    <label class="form-label" for="settings-problem-count">RUNIC LOCKS COUNT:</label>
+                    <select id="settings-problem-count" class="pixel-select">
+                        <option value="3">3 Problems (Quick Dive)</option>
+                        <option value="4" selected>4 Problems (Standard)</option>
+                        <option value="5">5 Problems (Master)</option>
+                        <option value="7">7 Problems (Legendary Challenge)</option>
+                    </select>
+                </div>
+
+                <!-- Audio Settings -->
+                <div class="form-group">
+                    <label class="form-label">SOUND EFFECTS VOLUME:</label>
+                    <div class="slider-row">
+                        <input type="range" id="settings-sfx-vol" min="0" max="100" value="70">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">CHIPTUNE MUSIC VOLUME:</label>
+                    <div class="slider-row">
+                        <input type="range" id="settings-music-vol" min="0" max="100" value="40">
+                    </div>
+                </div>
+
+                <div class="checkbox-row">
+                    <input type="checkbox" id="settings-mute">
+                    <span>MUTE ALL AUDIO</span>
+                </div>
+
+                <div class="checkbox-row">
+                    <input type="checkbox" id="settings-shake" checked>
+                    <span>SCREEN SHAKE EFFECTS</span>
+                </div>
+
+                <button id="settings-close-btn" class="pixel-btn btn-gold" style="margin-top: 8px;">SAVE & CLOSE</button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             HOW TO PLAY MODAL
+             ========================================= -->
+        <div id="instructions-modal" class="screen-overlay hidden">
+            <div class="modal-dialog">
+                <h3 class="modal-header">📜 EXPLORER'S HANDBOOK</h3>
+
+                <div class="instruction-section">
+                    <h4>PHASE 1: THE DIVE & OXYGEN RESTORATION</h4>
+                    <p>Navigate your submarine deep into the trench. Collect gold doubloons and torpedo crates. <b>Restore oxygen</b> by stopping near glowing <b>Hydrothermal Oxygen Vents</b> or grabbing blue O₂ canisters! Avoid sea mines and cavern walls.</p>
+                </div>
+
+                <div class="instruction-section">
+                    <h4>PHASE 2: SHIPWRECK VAULTS</h4>
+                    <p>Dock at your chosen wreck at 2100m depth: <b>The Pirate Galleon</b>, <b>R.M.S. Titanic</b>, or <b>Downed Plane Wreck</b>. Crack the math ciphers to retrieve the priceless relic!</p>
+                </div>
+
+                <div class="instruction-section">
+                    <h4>PHASE 3: LEVIATHAN ESCAPE</h4>
+                    <p>Opening the vault awakens the ancient sea monster! Race upwards to the surface before it devours you. Use BOOST (Shift) and FIRE SONIC TORPEDOES (F / Space) to stun the beast!</p>
+                </div>
+
+                <div class="instruction-section">
+                    <h4>DRYDOCK SHOP & RANKS</h4>
+                    <p>Doubloons you bring back are safely deposited into your wallet. Spend them at the Drydock Shop to unlock custom submarine hull skins and searchlight beams! Win expeditions to rank up from Cabin Boy to Legendary Sea Lord.</p>
+                </div>
+
+                <div class="instruction-section">
+                    <h4>CONTROLS</h4>
+                    <p>• <b>WASD / Arrow Keys</b>: Steer Submarine</p>
+                    <p>• <b>Shift</b>: Engine Speed Boost</p>
+                    <p>• <b>Space</b>: Sonar Ping (reveals area)</p>
+                    <p>• <b>F or E</b>: Fire Sonic Torpedo</p>
+                    <p>• <b>1, 2, 3, 4</b>: Choose Math Answer</p>
+                </div>
+
+                <button id="instructions-close-btn" class="pixel-btn btn-gold">◀ BACK TO BASE</button>
+            </div>
+        </div>
+
+        <!-- =========================================
+             VICTORY SCREEN
+             ========================================= -->
+        <div id="victory-screen" class="screen-overlay hidden">
+            <div class="victory-card">
+                <h2 style="color: #facc15; font-size: 16px;">🏆 SURFACE BREACHED! 🏆</h2>
+                <p id="victory-ship-desc" style="color: #38bdf8; font-size: 9px;">YOU ESCAPED WITH THE SUNKEN TREASURE!</p>
+
+                <div id="victory-xp-box" class="victory-xp-banner">
+                    +1,250 EXPEDITION POINTS EARNED!
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-item"><span>TIME:</span> <span id="victory-time">0s</span></div>
+                    <div class="stat-item"><span>DOUBLOONS:</span> <span id="victory-coins">0</span></div>
+                    <div class="stat-item"><span>SCORE:</span> <span id="victory-score">0</span></div>
+                    <div class="stat-item"><span>MATH ACCURACY:</span> <span id="victory-accuracy">100%</span></div>
+                </div>
+
+                <div class="victory-buttons">
+                    <button id="btn-victory-again" class="pixel-btn btn-green">DIVE AGAIN</button>
+                    <button id="btn-victory-home" class="pixel-btn btn-gold">🏠 BASE COMMAND</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- =========================================
+             GAMEOVER SCREEN
+             ========================================= -->
+        <div id="gameover-screen" class="screen-overlay hidden">
+            <div class="gameover-card">
+                <h2 style="color: #ef4444; font-size: 16px;">💀 CRITICAL FAILURE 💀</h2>
+                <p style="color: #fca5a5; font-size: 9px;">YOUR SUBMARINE WAS LOST TO THE ABYSS</p>
+
+                <p style="font-size: 9px; color: #94a3b8; margin: 8px 0;">The Leviathan continues to guard the sunken treasure...</p>
+
+                <div class="gameover-buttons">
+                    <button id="btn-gameover-restart" class="pixel-btn btn-danger">RETRY DIVE</button>
+                    <button id="btn-gameover-home" class="pixel-btn btn-gold">🏠 BASE COMMAND</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Hub Return Pill (Shown only when opened directly, not embedded in iframe) -->
+    <a href="../../" id="hub-return-pill" style="display:none; position:fixed; bottom:14px; left:14px; z-index:999999; background:rgba(9,13,22,0.85); backdrop-filter:blur(8px); border:1px solid rgba(0,240,255,0.4); color:#00f0ff; padding:7px 14px; border-radius:999px; font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:12px; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,0.5); transition:all 0.2s ease;">🕹️ Back to Arcade Hub</a>
+    <script>
+      if (window.self === window.top) {
+        const p = document.getElementById('hub-return-pill');
+        if (p) p.style.display = 'inline-flex';
+      }
+    </script>
+
+    <!-- Main Game Script Entry -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

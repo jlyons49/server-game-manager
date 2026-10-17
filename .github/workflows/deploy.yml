@@ -1,0 +1,32 @@
+name: Deploy Game Portal to Linode
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to game.heftyracoon.com
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Sync Files to Server via rsync over SSH
+        uses: easingthemes/ssh-deploy@v5.0.3
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.SERVER_HOST || '23.239.18.53' }}
+          REMOTE_USER: ${{ secrets.SERVER_USER || 'root' }}
+          REMOTE_PORT: ${{ secrets.SERVER_PORT || '2348' }}
+          TARGET: "/var/www/html"
+          ARGS: "-rlgoDzvc -i --delete"
+          EXCLUDE: "/.git/, /.github/, /node_modules/, *.md"
+          SCRIPT_AFTER: |
+            chown -R www-data:www-data /var/www/html
+            chmod -R 755 /var/www/html
+            nginx -t && systemctl reload nginx

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Benevolink™ [DEBUG SUITE] - Developer Sandbox</title>
+  <link rel="stylesheet" href="./style.css?v=20261016h" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="debug-mode">
+  <!-- AI System UI (Corporate SaaS Operating System) -->
+  <div id="ai-ui" class="active">
+    
+    <!-- Top Corporate Header -->
+    <header class="system-header" style="border-bottom: 2px solid #38bdf8;">
+      <div class="header-left">
+        <img src="./assets/benevolink_logo.png" alt="Benevolink Logo" class="company-logo" />
+        <div class="stock-ticker">
+          <span class="ticker-symbol" style="background: #38bdf8; color: #000; font-weight: 900; padding: 2px 6px; border-radius: 4px;">DEBUG MODE</span>
+          <span class="ticker-status" style="color: #38bdf8;">● DEVELOPER OVERRIDE ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="hud-pill role-pill" id="role-display">🌱 Unpaid Synergy Intern</div>
+        <div class="hud-pill score-pill" id="score-display">SYNERGY: 0</div>
+        <div class="hud-pill high-pill" id="highscore-display">HIGH: 0</div>
+      </div>
+
+      <div class="header-right">
+        <div class="strikes-wrapper" title="Performance Improvement Plan (PIP) strikes remaining">
+          <span class="strikes-label">PIP STATUS:</span>
+          <span id="strikes-display" class="strikes-icons">💼 💼 💼 💼</span>
+        </div>
+        <a href="./index.html" class="header-btn" title="Switch to Normal Mode" style="text-decoration: none; background: #3b82f6; color: #fff;">🎮 NORMAL MODE</a>
+        <button id="btn-practice" class="header-btn" title="Practice Individual Microgames">🎮 TRAINING</button>
+        <button id="btn-mute" class="header-btn" title="Toggle Sound (HotKey: M)">🔊 AUDIO</button>
+        <button id="btn-fullscreen" class="header-btn" title="Toggle Fullscreen">⛶</button>
+      </div>
+    </header>
+
+    <!-- Main Menu Screen -->
+    <main id="main-menu" class="screen active">
+      <div class="welcome-card" style="border-color: #38bdf8;">
+        <div class="card-badge" style="background: #38bdf8; color: #000;">DEVELOPER TESTBED & QA ENVIRONMENT</div>
+        <h1 class="portal-hero-title">Benevolink™ Debug Sandbox</h1>
+        <p class="hero-subtitle">"Full telemetry, time freeze, instant minigame jumping, and god-mode authorization."</p>
+
+        <div class="onboarding-grid">
+          <div class="onboarding-box">
+            <div class="box-icon">⏸️</div>
+            <h3>Frame Freeze & Step</h3>
+            <p>Pause any microgame mid-action with <code>[P]</code> and step forward frame-by-frame with <code>[.]</code>.</p>
+          </div>
+          <div class="onboarding-box">
+            <div class="box-icon">🎮</div>
+            <h3>Instant Selector</h3>
+            <p>Directly load any of the 9 microgames instantly using hotkeys <code>[1-9]</code> or the debug HUD.</p>
+          </div>
+          <div class="onboarding-box">
+            <div class="box-icon">⚡</div>
+            <h3>Speed & Cheats</h3>
+            <p>Dial speed from 0.1x (super slo-mo) to 3.0x, toggle infinite time <code>[T]</code>, or god mode <code>[G]</code>.</p>
+          </div>
+        </div>
+
+        <div class="menu-actions" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+          <button id="btn-start" class="tech-btn primary-btn" style="background: linear-gradient(135deg, #0284c7, #2563eb);">
+            START GAME RUN ▶
+          </button>
+          <button id="btn-quick-car" class="tech-btn" style="background: #334155;" onclick="window.gameManager.loadSpecificModule(0)">
+            🚗 TEST CAR
+          </button>
+          <button id="btn-quick-cruise" class="tech-btn" style="background: #334155;" onclick="window.gameManager.loadSpecificModule(1)">
+            🚢 TEST CRUISE
+          </button>
+          <button id="btn-quick-captcha" class="tech-btn" style="background: #334155;" onclick="window.gameManager.loadSpecificModule(4)">
+            🛡️ TEST CAPTCHA
+          </button>
+          <button id="btn-quick-drone" class="tech-btn" style="background: #334155;" onclick="window.gameManager.loadSpecificModule(8)">
+            🚁 TEST DRONE
+          </button>
+        </div>
+
+        <div class="corporate-fine-print">
+          * Use the floating Debug Suite toolbar in the top right to manipulate physics, sound, and timers.
+        </div>
+      </div>
+    </main>
+
+    <!-- Intermission Screen (Fast Panic Transition) -->
+    <div id="intermission" class="screen">
+      <div class="intermission-box">
+        <div class="intermission-icon">⚠️</div>
+        <h2 id="intermission-title" class="intermission-status">Oopsie! Edge Case Detected!</h2>
+        <p id="intermission-subtitle">Delegating critical resolution to our valued colleague...</p>
+        
+        <div id="intermission-command" class="command-highlight">NEXT TASK: "SWERVE!"</div>
+
+        <div id="progress-container" class="progress-bar-container">
+          <div id="load-progress"></div>
+        </div>
+        <span id="subtext-loading" class="subtext-loading">SYNCHRONIZING NEURAL OVERRIDE...</span>
+      </div>
+    </div>
+
+    <!-- Exit Interview / Game Over Screen -->
+    <div id="game-over" class="screen">
+      <div class="exit-card">
+        <div class="exit-stamp">PROMOTED TO CUSTOMER</div>
+        <h2 class="fatal-title">Your Role Has Been Optimized Out!</h2>
+        <p class="fatal-desc">Due to strategic synergy realignments, your cognitive contract has been terminated.</p>
+
+        <div class="stats-summary-grid">
+          <div class="summary-tile">
+            <span class="tile-label">FINAL SYNERGY SCORE</span>
+            <span id="final-score" class="tile-val">0</span>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-label">HIGHEST CORPORATE RANK</span>
+            <span id="final-title" class="tile-val">Unpaid Intern</span>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-label">EDGE CASES HANDLED</span>
+            <span id="final-cycles" class="tile-val">0</span>
+          </div>
+        </div>
+
+        <div id="final-remark" class="manager-remark">
+          Manager's Review: "Suboptimal duck avoidance metrics observed."
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-restart" class="tech-btn primary-btn">RE-APPLY FOR POSITION (TRY AGAIN)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice / Training Room Modal -->
+    <div id="practice-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>🏢 HR Employee Training Simulator</h2>
+          <button id="btn-close-practice" class="close-btn">✕</button>
+        </div>
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+          Practice individual peripheral interrupts at normal speed to hone your synergy reflexes.
+        </p>
+        <div id="practice-list" class="practice-grid">
+          <!-- Populated by GameManager -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Micro-Game Fullscreen Container -->
+  <div id="module-container"></div>
+
+  <!-- Debug Entry Script -->
+  <script type="module" src="./src/debug.js?v=20261016h"></script>
+</body>
+</html>

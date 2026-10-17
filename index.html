@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Hefty Raccoon Games | Web Arcade & Selection Portal</title>
+  <meta name="description" content="Explore and play web arcade games, 3D simulations, and interactive microgames on Hefty Raccoon. Zero install, pure browser gaming." />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="style.css?v=20261017a" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Sticky Navigation Bar -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="#" class="brand-link" id="brand-home-link">
+        <img src="assets/raccoon-logo.svg" alt="Hefty Raccoon Logo" class="brand-logo-img" />
+        <div class="brand-info">
+          <span class="brand-name">HEFTY RACCOON</span>
+          <span class="brand-tag">ARCADE PORTAL</span>
+        </div>
+      </a>
+
+      <!-- Quick Search Bar -->
+      <div class="header-center">
+        <div class="quick-search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="game-search" class="search-input" placeholder="Search games, genres, or tags..." autocomplete="off" spellcheck="false" />
+          <kbd class="search-kbd">/</kbd>
+        </div>
+      </div>
+
+      <!-- Live Stats & Server Status -->
+      <div class="header-right">
+        <div class="stat-chip" title="Active games loaded and playable on server">
+          <span class="live-pulse"></span>
+          <span id="header-game-count">3 Games Active</span>
+        </div>
+        <a href="https://github.com/jlyons49/server-game-manager" target="_blank" rel="noopener noreferrer" class="btn-header-action" title="View Source on GitHub">
+          <span>GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Featured Spotlight / Hero Section -->
+  <section class="hero-section" id="hero-section">
+    <div class="spotlight-card" id="spotlight-card">
+      <div class="spotlight-details">
+        <div class="spotlight-badge" id="spotlight-badge">⭐ FEATURED HIGHLIGHT</div>
+        <h1 class="spotlight-title" id="spotlight-title">Benevolink™: Actual Individual</h1>
+        <p class="spotlight-subtitle" id="spotlight-subtitle">Where artificial hyper-intelligence meets actual underpaid individuals</p>
+        <p class="spotlight-desc" id="spotlight-desc">
+          A fast-paced satirical WarioWare-style microgame collection. Outsmart AI chaos with 2-5 second split-second peripheral tasks, steer around ducks, incinerate defective socks, and climb the corporate ladder!
+        </p>
+
+        <div class="spotlight-tags" id="spotlight-tags">
+          <span class="tag-pill">WarioWare</span>
+          <span class="tag-pill">8 Microgames</span>
+          <span class="tag-pill">Procedural Audio</span>
+          <span class="tag-pill">Satire</span>
+        </div>
+
+        <div class="spotlight-actions">
+          <button id="btn-spotlight-play" class="btn-primary">
+            <span>▶ PLAY NOW</span>
+          </button>
+          <button id="btn-spotlight-details" class="btn-secondary">
+            <span>ℹ Game Details</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="spotlight-preview" id="spotlight-preview">
+        <div class="spotlight-icon-huge" id="spotlight-icon">🤖</div>
+        <div class="spotlight-preview-stats">
+          <div class="spotlight-stat">
+            <span class="stat-value" id="spotlight-rating">4.9 ★</span>
+            <span class="stat-label">Rating</span>
+          </div>
+          <div class="spotlight-stat">
+            <span class="stat-value" id="spotlight-category">Arcade</span>
+            <span class="stat-label">Genre</span>
+          </div>
+          <div class="spotlight-stat">
+            <span class="stat-value" id="spotlight-version">v2.0</span>
+            <span class="stat-label">Version</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filter & Controls Toolbar -->
+  <section class="controls-section">
+    <!-- Category Tabs Filter -->
+    <nav class="categories-bar" id="categories-bar" aria-label="Game Categories">
+      <!-- Populated dynamically by app.js -->
+    </nav>
+
+    <!-- Results count & Sorting Controls -->
+    <div class="toolbar-secondary">
+      <div class="results-count" id="results-count">
+        Showing <b>3</b> of <b>3</b> games
+      </div>
+
+      <div class="toolbar-actions">
+        <div class="sort-group">
+          <label for="sort-select">Sort by:</label>
+          <select id="sort-select" class="sort-select">
+            <option value="featured">Featured First</option>
+            <option value="rating-desc">Rating: High to Low</option>
+            <option value="title-asc">Title: A to Z</option>
+            <option value="newest">Recently Added</option>
+          </select>
+        </div>
+
+        <div class="view-mode-toggle">
+          <button id="view-grid" class="view-btn active" title="Grid View">⊞</button>
+          <button id="view-list" class="view-btn" title="List View">☰</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Game Catalog Section -->
+  <main class="catalog-section">
+    <div id="games-grid" class="games-grid">
+      <!-- Game cards generated dynamically by app.js -->
+    </div>
+
+    <!-- Scalable Pagination Navigation (Supports arbitrarily large number of games) -->
+    <div id="pagination-controls" class="pagination-container">
+      <!-- Populated dynamically when games exceed page size -->
+    </div>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <span class="footer-title">Hefty Raccoon Games</span>
+        <span class="footer-desc">Deployed on Linode Debian Linux & Nginx · Production Domain: game.heftyracoon.com</span>
+      </div>
+
+      <div class="footer-links">
+        <a href="#how-to-add-a-game" id="link-how-to-add">➕ How to Add a Game</a>
+        <a href="https://github.com/jlyons49/server-game-manager" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+        <a href="#" id="link-back-top">▲ Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       GAME PLAYER MODAL (THEATER / FULLSCREEN EMBED MODE)
+       ========================================================================= -->
+  <div id="player-modal" class="player-modal-backdrop" aria-hidden="true" role="dialog">
+    <header class="player-navbar">
+      <div class="player-nav-left">
+        <button id="btn-player-exit" class="btn-exit-player" title="Exit to Game Selector (ESC)">
+          <span>← BACK TO ARCADE</span>
+        </button>
+        <div class="player-game-title">
+          <span id="player-game-icon">🎮</span>
+          <span id="player-game-name">Game Title</span>
+        </div>
+      </div>
+
+      <div class="player-nav-right">
+        <button id="btn-player-reload" class="btn-player-tool" title="Reload Game">
+          <span>🔄</span> <span>Reload</span>
+        </button>
+        <button id="btn-player-newtab" class="btn-player-tool" title="Open in New Tab">
+          <span>↗</span> <span>New Tab</span>
+        </button>
+        <button id="btn-player-fullscreen" class="btn-player-tool" title="Toggle Fullscreen (F)">
+          <span>⛶</span> <span>Fullscreen</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="player-iframe-container">
+      <div id="player-loading-spinner" class="player-loader">
+        <div class="loader-spinner"></div>
+        <p style="color: #94a3b8; font-weight: 600; font-size: 0.9rem;">Initializing Game Sandbox...</p>
+      </div>
+      <iframe
+        id="game-iframe"
+        class="player-iframe"
+        src=""
+        allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       GAME DETAILS MODAL
+       ========================================================================= -->
+  <div id="details-modal" class="modal-backdrop" aria-hidden="true" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-header-banner" id="modal-header-banner">
+        <button id="btn-close-details" class="modal-close-btn" title="Close Modal">✕</button>
+        <h2 id="modal-game-title" class="modal-title">Game Title</h2>
+        <p id="modal-game-tagline" class="modal-tagline">Tagline goes here</p>
+      </div>
+
+      <div class="modal-content-body">
+        <div class="modal-meta-grid">
+          <div class="meta-item">
+            <span class="meta-label">Genre</span>
+            <span class="meta-val" id="modal-meta-genre">Arcade</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Controls</span>
+            <span class="meta-val" id="modal-meta-controls">Keyboard / Touch</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Version</span>
+            <span class="meta-val" id="modal-meta-version">v1.0.0</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 class="modal-section-title">Overview & Premise</h4>
+          <p id="modal-game-desc" style="color: #cbd5e1; font-size: 0.95rem; line-height: 1.6;"></p>
+        </div>
+
+        <div>
+          <h4 class="modal-section-title">Key Features</h4>
+          <ul id="modal-features-list" class="modal-features-list">
+            <!-- Populated dynamically -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="btn-modal-share" class="btn-secondary" title="Copy shareable link">
+          <span>🔗 Copy Link</span>
+        </button>
+        <button id="btn-modal-launch" class="btn-primary">
+          <span>▶ Launch Game</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Script Entry -->
+  <script type="module" src="src/app.js?v=20261017a"></script>
+</body>
+</html>

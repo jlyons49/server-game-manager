@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Benevolink™ Colleague Portal - Actual Individual</title>
+  <link rel="stylesheet" href="./style.css?v=20261016h" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- AI System UI (Corporate SaaS Operating System) -->
+  <div id="ai-ui" class="active">
+    
+    <!-- Top Corporate Header -->
+    <header class="system-header">
+      <div class="header-left">
+        <img src="./assets/benevolink_logo.png" alt="Benevolink Logo" class="company-logo" />
+        <div class="stock-ticker">
+          <span class="ticker-symbol">$BNVLK</span>
+          <span class="ticker-up">▲ 42.8%</span>
+          <span class="ticker-status">● AUTONOMOUS CLOUD OPERATIONAL</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="hud-pill role-pill" id="role-display">🌱 Unpaid Synergy Intern</div>
+        <div class="hud-pill score-pill" id="score-display">SYNERGY: 0</div>
+        <div class="hud-pill high-pill" id="highscore-display">HIGH: 0</div>
+      </div>
+
+      <div class="header-right">
+        <div class="strikes-wrapper" title="Performance Improvement Plan (PIP) strikes remaining">
+          <span class="strikes-label">PIP STATUS:</span>
+          <span id="strikes-display" class="strikes-icons">💼 💼 💼 💼</span>
+        </div>
+        <button id="btn-practice" class="header-btn" title="Practice Individual Microgames">🎮 <span class="btn-label">TRAINING</span></button>
+        <button id="btn-mute" class="header-btn" title="Toggle Sound (HotKey: M)">🔊 <span class="btn-label">AUDIO</span></button>
+        <button id="btn-fullscreen" class="header-btn" title="Toggle Fullscreen">⛶</button>
+      </div>
+    </header>
+
+    <!-- Main Menu Screen -->
+    <main id="main-menu" class="screen active">
+      <div class="welcome-card">
+        <div class="card-badge">MANDATORY ONBOARDING BRIEFING</div>
+        <h1 class="portal-hero-title">Benevolink™ Human Fallback Protocol</h1>
+        <p class="hero-subtitle">"Where artificial hyper-intelligence meets actual underpaid individuals."</p>
+
+        <div class="onboarding-grid">
+          <div class="onboarding-box">
+            <div class="box-icon">🤖</div>
+            <h3>99.9% Autonomous</h3>
+            <p>Our planetary AI cluster optimizes supply chains and governs fleets with flawless precision.</p>
+          </div>
+          <div class="onboarding-box">
+            <div class="box-icon">🚨</div>
+            <h3>The 0.1% Edge Case</h3>
+            <p>When our neural weights face ducks, holey socks, or CAPTCHAs, it suffers cognitive paralysis.</p>
+          </div>
+          <div class="onboarding-box">
+            <div class="box-icon">⚡</div>
+            <h3>Rapid Outsourcing</h3>
+            <p>You have 3-5 seconds to manually resolve each crisis before the stock price dips. Pitch in!</p>
+          </div>
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-start" class="tech-btn primary-btn">
+            ACKNOWLEDGE & COMMENCE SHIFT ▶
+          </button>
+          <button id="btn-menu-practice" class="tech-btn secondary-btn">
+            🎮 TRAINING SIMULATOR
+          </button>
+        </div>
+
+        <div class="corporate-fine-print">
+          * By clicking above, you waive claims regarding existential dread, RSI, or instantaneous promotion to Customer.
+        </div>
+      </div>
+    </main>
+
+    <!-- Intermission Screen (Fast Panic Transition) -->
+    <div id="intermission" class="screen">
+      <div class="intermission-box">
+        <div class="intermission-icon">⚠️</div>
+        <h2 id="intermission-title" class="intermission-status">Oopsie! Edge Case Detected!</h2>
+        <p id="intermission-subtitle">Delegating critical resolution to our valued colleague...</p>
+        
+        <div id="intermission-command" class="command-highlight">NEXT TASK: "SWERVE!"</div>
+
+        <div id="progress-container" class="progress-bar-container">
+          <div id="load-progress"></div>
+        </div>
+        <span id="subtext-loading" class="subtext-loading">SYNCHRONIZING NEURAL OVERRIDE...</span>
+      </div>
+    </div>
+
+    <!-- Exit Interview / Game Over Screen -->
+    <div id="game-over" class="screen">
+      <div class="exit-card">
+        <div class="exit-stamp">PROMOTED TO CUSTOMER</div>
+        <h2 class="fatal-title">Your Role Has Been Optimized Out!</h2>
+        <p class="fatal-desc">Due to strategic synergy realignments, your cognitive contract has been terminated.</p>
+
+        <div class="stats-summary-grid">
+          <div class="summary-tile">
+            <span class="tile-label">FINAL SYNERGY SCORE</span>
+            <span id="final-score" class="tile-val">0</span>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-label">HIGHEST CORPORATE RANK</span>
+            <span id="final-title" class="tile-val">Unpaid Intern</span>
+          </div>
+          <div class="summary-tile">
+            <span class="tile-label">EDGE CASES HANDLED</span>
+            <span id="final-cycles" class="tile-val">0</span>
+          </div>
+        </div>
+
+        <div id="final-remark" class="manager-remark">
+          Manager's Review: "Suboptimal duck avoidance metrics observed."
+        </div>
+
+        <div class="menu-actions">
+          <button id="btn-restart" class="tech-btn primary-btn">RE-APPLY FOR POSITION (TRY AGAIN)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practice / Training Room Modal -->
+    <div id="practice-modal" class="modal-backdrop">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2>🏢 HR Employee Training Simulator</h2>
+          <button id="btn-close-practice" class="close-btn">✕</button>
+        </div>
+        <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 20px;">
+          Practice individual peripheral interrupts at normal speed to hone your synergy reflexes.
+        </p>
+        <div id="practice-list" class="practice-grid">
+          <!-- Populated by GameManager -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Micro-Game Fullscreen Container -->
+  <div id="module-container"></div>
+
+  <!-- Floating Hub Return Pill (Shown only when opened directly, not embedded in iframe) -->
+  <a href="../../" id="hub-return-pill" style="display:none; position:fixed; bottom:14px; left:14px; z-index:999999; background:rgba(9,13,22,0.85); backdrop-filter:blur(8px); border:1px solid rgba(0,240,255,0.4); color:#00f0ff; padding:7px 14px; border-radius:999px; font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:12px; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,0.5); transition:all 0.2s ease;">🕹️ Back to Arcade Hub</a>
+  <script>
+    if (window.self === window.top) {
+      const p = document.getElementById('hub-return-pill');
+      if (p) p.style.display = 'inline-flex';
+    }
+  </script>
+
+  <!-- Entry Script -->
+  <script type="module" src="./src/main.js?v=20261016h"></script>
+</body>
+</html>
