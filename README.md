@@ -1,7 +1,7 @@
 # 🦝 Hefty Raccoon Games — Multi-Game Selection Portal
 
 > **Live Production URL:** [https://game.heftyracoon.com](https://game.heftyracoon.com)  
-> **Server:** Linode Debian VPS (`23.239.18.53:2348`) running Nginx & Certbot SSL
+> **Server:** Linode Debian VPS (`game.heftyracoon.com:2348` via Dynamic DNS) running Nginx & Certbot SSL
 
 A modern, responsive web arcade portal that allows players to discover and launch multiple games directly in the browser with zero installation. Built with pure vanilla HTML5, modern CSS3, ES Modules, and the Web Audio API (zero bundlers, zero build steps, instant HTTP/2 static delivery).
 
@@ -71,7 +71,7 @@ server-game-manager/
 
 Every push to the `main` or `master` branch triggers the GitHub Actions workflow in `.github/workflows/deploy.yml`:
 1. Checks out the code.
-2. Synchronizes repository files to `/var/www/html` on `23.239.18.53:2348` via SSH `rsync`.
+2. Synchronizes repository files to `/var/www/html` on `game.heftyracoon.com:2348` via SSH `rsync`.
 3. Automatically sets correct permissions (`www-data:www-data`, `755`).
 4. Gracefully reloads Nginx.
 

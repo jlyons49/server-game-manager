@@ -20,7 +20,7 @@ jobs:
         uses: easingthemes/ssh-deploy@v5.0.3
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.SERVER_HOST || '23.239.18.53' }}
+          REMOTE_HOST: ${{ secrets.SERVER_HOST || 'game.heftyracoon.com' }}
           REMOTE_USER: ${{ secrets.SERVER_USER || 'root' }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT || '2348' }}
           TARGET: "/var/www/html"
