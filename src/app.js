@@ -5,8 +5,61 @@
 
 import { fallbackGamesData } from './games-data.js';
 
+// Procedural 90s Chiptune / MIDI BGM Generator (Pure Web Audio API, Zero Assets)
+class RetroMidiPlayer {
+  constructor() {
+    this.ctx = null;
+    this.isPlaying = false;
+    this.timer = null;
+    this.step = 0;
+    // Catchy retro 90s arcade groove loop (C major pentatonic / blues)
+    this.melody = [
+      261.63, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63, 293.66,
+      261.63, 392.00, 523.25, 659.25, 587.33, 523.25, 440.00, 392.00,
+      349.23, 440.00, 523.25, 587.33, 523.25, 440.00, 349.23, 329.63,
+      293.66, 392.00, 440.00, 493.88, 523.25, 0,      523.25, 0
+    ];
+  }
+
+  toggle(btn) {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      this.ctx = new AudioCtx();
+    }
+    if (this.ctx.state === 'suspended') {
+      this.ctx.resume();
+    }
+
+    if (this.isPlaying) {
+      clearInterval(this.timer);
+      this.isPlaying = false;
+      if (btn) btn.textContent = '🎵 Play 90s MIDI BGM';
+    } else {
+      this.isPlaying = true;
+      if (btn) btn.textContent = '⏸ Pause 90s MIDI BGM';
+      this.timer = setInterval(() => {
+        const freq = this.melody[this.step % this.melody.length];
+        this.step++;
+        if (freq > 0 && this.ctx) {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.06, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.16);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.18);
+        }
+      }, 160);
+    }
+  }
+}
+
 class GamePortalApp {
   constructor() {
+    this.midi = new RetroMidiPlayer();
     this.catalog = null;
     this.games = [];
     this.categories = [];
@@ -188,9 +241,40 @@ class GamePortalApp {
     if (howToAdd) {
       howToAdd.addEventListener('click', (e) => {
         e.preventDefault();
-        alert("To add a new game:\n1. Place the game folder inside the /games/ directory\n2. Add its metadata to games.json\n3. Git push! It deploys automatically to game.heftyracoon.com.");
+        alert("★ HOW TO ADD A RADICAL GAME ★\n1. Place your game folder inside /games/\n2. Add metadata to games.json\n3. Git push! Automated deployment to game.heftyracoon.com!");
       });
     }
+
+    // 90s MIDI BGM Player Toggle
+    const midiBtn = document.getElementById('btn-midi-toggle');
+    if (midiBtn) {
+      midiBtn.addEventListener('click', () => {
+        this.midi.toggle(midiBtn);
+      });
+    }
+
+    // 90s Guestbook Sign Button
+    const guestbookBtn = document.getElementById('btn-guestbook');
+    if (guestbookBtn) {
+      guestbookBtn.addEventListener('click', () => {
+        const handle = prompt("★ SIGN HEFTY RACCOON'S GUESTBOOK ★\nEnter your Cyber-Handle or AOL Screen Name:", "CyberRaccoon_99");
+        if (handle) {
+          alert(`★ THANK YOU, ${handle.toUpperCase()}! ★\nYour sign-in has been logged in our CGI-BIN guestbook database! Peace, love & 56k dialup!`);
+        }
+      });
+    }
+
+    // Webring Links
+    const prevWebring = document.getElementById('link-webring-prev');
+    const nextWebring = document.getElementById('link-webring-next');
+    [prevWebring, nextWebring].forEach(link => {
+      if (link) {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          alert("❖ SURFING THE INFORMATION SUPERHIGHWAY ❖\nTraveling to the next radical homepage in the Raccoon WebRing!");
+        });
+      }
+    });
   }
 
   applyRoutingFromHash() {
@@ -359,31 +443,42 @@ class GamePortalApp {
     const isHot = game.badge && game.badge.includes('HOT');
 
     card.innerHTML = `
-      <div class="card-banner">
-        <div class="card-banner-bg" style="background: ${gradient}"></div>
-        <div class="card-badges">
-          <span class="badge-tag ${isHot ? 'hot' : ''}">${badgeText}</span>
-          <span class="badge-tag rating">★ ${game.rating || '5.0'}</span>
+      <div class="win95-titlebar">
+        <span>💾 C:\\GAMES\\${game.id.toUpperCase()}.EXE</span>
+        <div class="win95-controls">
+          <span class="win95-btn">_</span>
+          <span class="win95-btn">□</span>
+          <span class="win95-btn">✕</span>
         </div>
-        <div class="card-icon-overlay">${game.icon || '🕹️'}</div>
       </div>
 
-      <div class="card-body">
-        <h3 class="card-title">${game.title}</h3>
-        <p class="card-tagline">${game.tagline || game.subtitle || ''}</p>
-        <p class="card-desc">${game.description || ''}</p>
-
-        <div class="card-tags">
-          ${(game.tags || []).slice(0, 3).map(tag => `<span class="tag-pill">${tag}</span>`).join('')}
+      <div class="card-inner-box">
+        <div class="card-banner">
+          <div class="card-banner-bg" style="background: ${gradient}"></div>
+          <div class="card-badges">
+            <span class="badge-tag ${isHot ? 'hot' : ''}">${badgeText}</span>
+            <span class="badge-tag rating">★ ${game.rating || '5.0'}</span>
+          </div>
+          <div class="card-icon-overlay">${game.icon || '🕹️'}</div>
         </div>
 
-        <div class="card-footer">
-          <button class="btn-card-play" data-action="play">
-            <span>▶ Play Now</span>
-          </button>
-          <button class="btn-card-details" data-action="details" title="View Game Info">
-            <span>Details</span>
-          </button>
+        <div class="card-body">
+          <h3 class="card-title">${game.title}</h3>
+          <p class="card-tagline">${game.tagline || game.subtitle || ''}</p>
+          <p class="card-desc">${game.description || ''}</p>
+
+          <div class="card-tags">
+            ${(game.tags || []).slice(0, 3).map(tag => `<span class="tag-pill">${tag}</span>`).join('')}
+          </div>
+
+          <div class="card-footer">
+            <button class="btn-card-play" data-action="play">
+              <span>▶ PLAY NOW!</span>
+            </button>
+            <button class="btn-card-details" data-action="details" title="View Game Info">
+              <span>Instructions</span>
+            </button>
+          </div>
         </div>
       </div>
     `;
