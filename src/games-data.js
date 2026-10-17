@@ -10,8 +10,6 @@ export const fallbackGamesData = {
     { "id": "all", "label": "All Games", "icon": "🎮" },
     { "id": "featured", "label": "Featured", "icon": "⭐" },
     { "id": "arcade", "label": "Arcade", "icon": "🕹️" },
-    { "id": "3d-webgl", "label": "3D & WebGL", "icon": "🌐" },
-    { "id": "simulation", "label": "Simulation", "icon": "⚙️" },
     { "id": "puzzle", "label": "Puzzle & Brain", "icon": "🧩" },
     { "id": "retro", "label": "Retro 2D", "icon": "👾" }
   ],
@@ -53,6 +51,44 @@ export const fallbackGamesData = {
         "Procedural Synthesized Web Audio Engine with dynamic BGM tempo ramping",
         "SpeechSynthesis Voice Narration and responsive PIP strike system",
         "Dedicated Training / HR Practice Room simulator"
+      ]
+    },
+    {
+      "id": "jj-game-prototype",
+      "title": "Abyssal Vault: Sunken Treasure",
+      "subtitle": "Retro Deep-Sea Expedition & Math Cipher Salvage",
+      "tagline": "Command a submarine, dodge sea monsters, and crack ancient ciphers",
+      "description": "A retro pixel art browser adventure where you command an explorer submarine diving into oceanic caverns to recover cursed treasure from shipwrecks, cracking mathematical runic ciphers along the way, and making a daring high-speed escape from an awakened Sea Monster.",
+      "category": "retro",
+      "categories": [
+        "retro",
+        "arcade",
+        "puzzle"
+      ],
+      "tags": [
+        "Canvas 2D",
+        "Retro Pixel Art",
+        "Submarine",
+        "Math Ciphers",
+        "Web Audio"
+      ],
+      "rating": 4.8,
+      "players": "1 Player",
+      "controls": "Keyboard (W/A/S/D / Arrows, Space for Sonar, F/E for Torpedo) & Touch D-Pad",
+      "entryUrl": "games/jj-game-prototype/index.html",
+      "author": "Josh Lyons",
+      "version": "1.0.0",
+      "releaseDate": "2026-10-17",
+      "featured": false,
+      "badge": "RETRO 2D",
+      "icon": "⚓",
+      "coverGradient": "linear-gradient(135deg, #0f172a 0%, #0369a1 50%, #0284c7 100%)",
+      "accentColor": "#38bdf8",
+      "features": [
+        "Atmospheric pixel-art 2D ocean canvas engine with dynamic lighting and bubble particles",
+        "Interactive math runic ciphers and ancient shipwreck salvage",
+        "Oxygen restoration vents, depth minefields, and sonar ping radar",
+        "High-speed ascent chase sequence against the Abyssal Leviathan"
       ]
     }
   ]
