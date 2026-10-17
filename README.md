@@ -46,26 +46,24 @@ A modern, responsive web arcade portal that allows players to discover and launc
 server-game-manager/
 ├── .github/
 │   └── workflows/
-│       └── deploy.yml          # Automated GitHub Actions rsync deploy
+│       └── deploy.yml          # Automated GitHub Actions rsync deploy (protects /games/)
 ├── .gitignore
-├── games.json                  # JSON catalog of all registered games
+├── games.json                  # Central catalog of all registered games
 ├── index.html                  # Main portal interface
 ├── style.css                   # Cyber-arcade responsive stylesheet
 ├── README.md                   # Project overview & server documentation
-├── HOW_TO_ADD_A_GAME.md        # Contributor guide for adding new games
+├── HOW_TO_ADD_A_GAME.md        # Guide for connecting new game repos
 ├── assets/
 │   ├── favicon.svg             # Raccoon arcade favicon
 │   └── raccoon-logo.svg        # Vector arcade branding logo
 ├── scripts/
-│   └── sync_games.py           # Auto-scanner to register new games into catalog
-├── src/
-│   ├── app.js                  # Portal controller (search, sort, player modal)
-│   └── games-data.js           # Offline/file protocol fallback dataset
-└── games/
-    ├── benevolink/             # Game Prototype 2 (WarioWare satire)
-    ├── abyssal-vault-3d/       # 3D WebGL Submarine simulation
-    └── abyssal-vault-2d/       # 2D Retro Canvas Submarine adventure
+│   └── sync_games.py           # Helper script for games catalog sync
+└── src/
+    ├── app.js                  # Portal controller (search, sort, filter, pagination)
+    └── games-data.js           # Offline/file protocol fallback dataset
 ```
+
+> **Note**: Individual games live in their own Git repositories and deploy directly to `/var/www/html/games/<game-slug>` on the production server. The portal protects the `/games/` folder from being overwritten or deleted.
 
 ---
 

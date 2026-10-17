@@ -1,73 +1,69 @@
 # 🕹️ How to Add a New Game to the Portal
 
-The Hefty Raccoon Game Portal is designed to scale to an arbitrarily large number of games. Adding a game requires zero changes to the core portal codebase.
+The Hefty Raccoon Game Portal uses a **decoupled, multi-repository architecture**. Each game lives in its own Git repository and deploys directly into its own folder on the production server.
 
 ---
 
-## 🚀 Quick Steps (2 Minutes)
+## 🚀 Adding a Game in 3 Easy Steps
 
-### Step 1: Add Your Game Folder
-Place your self-contained game folder into the `games/` directory:
+### Step 1: Configure Your Game Repo's Deploy Workflow
+In your game's repository, add or update `.github/workflows/deploy.yml`:
 
-```text
-games/
-  └── my-new-game/
-      ├── index.html        <-- Main entry point (required)
-      ├── style.css
-      ├── src/
-      └── assets/
+```yaml
+name: Deploy Game to Production
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Hefty Raccoon Arcade
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Sync Game to Server Subfolder
+        uses: easingthemes/ssh-deploy@v5.0.3
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.SERVER_HOST || '23.239.18.53' }}
+          REMOTE_USER: ${{ secrets.SERVER_USER || 'root' }}
+          REMOTE_PORT: ${{ secrets.SERVER_PORT || '2348' }}
+          TARGET: "/var/www/html/games/YOUR_GAME_SLUG"
+          ARGS: "-rlgoDzvc -i --delete"
+          EXCLUDE: "/.git/, /.github/, /node_modules/, *.md, package.json"
+          SCRIPT_BEFORE: |
+            mkdir -p /var/www/html/games/YOUR_GAME_SLUG
+          SCRIPT_AFTER: |
+            chown -R www-data:www-data /var/www/html/games/YOUR_GAME_SLUG
+            chmod -R 755 /var/www/html/games/YOUR_GAME_SLUG
 ```
 
-> **Important**: Ensure all asset and script paths inside your game are **relative** (`./style.css`, `./src/main.js`, `./assets/...`) so the game works whether loaded in an iframe or accessed directly at `/games/my-new-game/`.
+> **Note**: Add your `SERVER_SSH_KEY` secret in the game repo's **Settings > Secrets and variables > Actions**.
 
 ---
 
-### Step 2: Auto-Discover or Register
-
-#### Option A: Auto-Discovery via Python Script (Recommended)
-Run the sync script from the repository root:
-
-```bash
-python scripts/sync_games.py
-```
-
-The script will:
-- Detect your new folder in `games/`
-- Generate an entry with default title and arcade tags in `games.json`
-- Update the offline fallback dataset `src/games-data.js`
-
-#### Option B: Add Custom Metadata (`game.json`)
-If you want to pre-specify the title, tags, and description, place a `game.json` file inside your game's directory:
+### Step 2: Register the Game in `server-game-manager`
+In the `server-game-manager` repository, add a new entry to [`games.json`](games.json):
 
 ```json
 {
-  "title": "Space Invaders Deluxe",
-  "category": "arcade",
-  "tags": ["Space", "Retro", "Shooter"],
-  "description": "Defend the galactic outpost from waves of descending alien invaders.",
-  "version": "1.0.0"
-}
-```
-
-Then run `python scripts/sync_games.py`.
-
-#### Option C: Manual Registration in `games.json`
-You can also directly edit `games.json` in the root:
-
-```json
-{
-  "id": "my-new-game",
-  "title": "My Awesome Game",
-  "subtitle": "Subtitle or premise",
-  "tagline": "Short punchy summary",
-  "description": "Full description of gameplay...",
+  "id": "YOUR_GAME_SLUG",
+  "title": "Your Game Title",
+  "subtitle": "Short punchy subtitle",
+  "tagline": "One sentence summary",
+  "description": "Full gameplay description...",
   "category": "arcade",
   "categories": ["arcade", "action"],
-  "tags": ["Pixel Art", "2D", "Fast-Paced"],
+  "tags": ["2D", "Fast-Paced", "Web Audio"],
   "rating": 4.9,
   "players": "1 Player",
   "controls": "Arrow Keys / Spacebar",
-  "entryUrl": "games/my-new-game/index.html",
+  "entryUrl": "games/YOUR_GAME_SLUG/index.html",
   "author": "Your Name",
   "version": "1.0.0",
   "releaseDate": "2026-10-17",
@@ -75,17 +71,16 @@ You can also directly edit `games.json` in the root:
   "badge": "NEW",
   "icon": "🚀",
   "coverGradient": "linear-gradient(135deg, #1e3a8a, #7c3aed)",
-  "accentColor": "#00f0ff"
+  "accentColor": "#00f0ff",
+  "features": [
+    "Key feature 1",
+    "Key feature 2"
+  ]
 }
 ```
 
 ---
 
 ### Step 3: Commit and Push
-```bash
-git add .
-git commit -m "feat: add my-new-game to arcade portal"
-git push origin main
-```
-
-GitHub Actions will automatically deploy the updated portal and new game to `game.heftyracoon.com`!
+- Push your game repository to deploy the game files.
+- Push `server-game-manager` to update the portal catalog on [game.heftyracoon.com](https://game.heftyracoon.com).
