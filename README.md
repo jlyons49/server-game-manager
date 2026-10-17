@@ -10,14 +10,9 @@ A modern, responsive web arcade portal that allows players to discover and launc
 ## 🎮 Included Games
 
 1. **Benevolink™: Actual Individual** (`games/benevolink/`)
-   - *Moved from `game-prototype-2`*
+   - *Deployed from `game-prototype-2`*
    - A fast-paced satirical WarioWare-style microgame collection where a planetary AI panics over everyday edge cases and outsources split-second decisions to human operators.
    - Features 8 procedural microgames, synthesized dynamic BGM tempo scaling, and HR training room.
-2. **Abyssal Vault 3D: Deep Sea Expedition** (`games/abyssal-vault-3d/`)
-   - High-fidelity 3D WebGL underwater exploration simulator built with Three.js.
-   - Pilot an articulated exploration submarine across 3 ocean zones to salvage sunken shipwrecks (Pirate Galleon, Titanic, B-17 Bomber) and escape the Leviathan.
-3. **Abyssal Vault 2D: Sunken Treasure** (`games/abyssal-vault-2d/`)
-   - Classic 2D canvas retro submarine salvage expedition with procedural minefields and math cipher puzzles.
 
 ---
 

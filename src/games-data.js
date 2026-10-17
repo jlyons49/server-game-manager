@@ -1,126 +1,21 @@
-// Auto-generated fallback embedded game dataset
+// Fallback embedded game dataset for offline / file:// protocol compatibility
 export const fallbackGamesData = {
   "version": "1.0.0",
-  "updatedAt": "2026-10-17T14:26:00Z",
   "portal": {
     "title": "Hefty Raccoon Games",
     "domain": "game.heftyracoon.com",
     "description": "The official arcade and game portal for Hefty Raccoon. Play cutting-edge web games, prototypes, and microgames directly in your browser with zero install."
   },
   "categories": [
-    {
-      "id": "all",
-      "label": "All Games",
-      "icon": "🎮"
-    },
-    {
-      "id": "featured",
-      "label": "Featured",
-      "icon": "⭐"
-    },
-    {
-      "id": "arcade",
-      "label": "Arcade",
-      "icon": "🕹️"
-    },
-    {
-      "id": "3d-webgl",
-      "label": "3D & WebGL",
-      "icon": "🌐"
-    },
-    {
-      "id": "simulation",
-      "label": "Simulation",
-      "icon": "⚙️"
-    },
-    {
-      "id": "puzzle",
-      "label": "Puzzle & Brain",
-      "icon": "🧩"
-    },
-    {
-      "id": "retro",
-      "label": "Retro 2D",
-      "icon": "👾"
-    }
+    { "id": "all", "label": "All Games", "icon": "🎮" },
+    { "id": "featured", "label": "Featured", "icon": "⭐" },
+    { "id": "arcade", "label": "Arcade", "icon": "🕹️" },
+    { "id": "3d-webgl", "label": "3D & WebGL", "icon": "🌐" },
+    { "id": "simulation", "label": "Simulation", "icon": "⚙️" },
+    { "id": "puzzle", "label": "Puzzle & Brain", "icon": "🧩" },
+    { "id": "retro", "label": "Retro 2D", "icon": "👾" }
   ],
   "games": [
-    {
-      "id": "abyssal-vault-2d",
-      "title": "Abyssal Vault 2D: Sunken Treasure",
-      "subtitle": "Retro Deep-Sea Expedition & Math Cipher Challenge",
-      "tagline": "Classic 2D submarine arcade expedition with procedural ocean depths",
-      "description": "A classic 2D submarine expedition game featuring custom canvas particle systems, procedural sonar audio, depth mine navigation, math cipher puzzle solving, and deep-sea salvage.",
-      "category": "retro",
-      "categories": [
-        "retro",
-        "arcade",
-        "puzzle"
-      ],
-      "tags": [
-        "Canvas 2D",
-        "Retro",
-        "Arcade",
-        "Puzzle",
-        "Submarine"
-      ],
-      "rating": 4.7,
-      "players": "1 Player",
-      "controls": "Keyboard (W/A/S/D / Arrows) & Touch Controls",
-      "entryUrl": "games/abyssal-vault-2d/index.html",
-      "author": "Josh Lyons",
-      "version": "1.0.0",
-      "releaseDate": "2026-10-17",
-      "featured": false,
-      "badge": "RETRO 2D",
-      "icon": "🧭",
-      "coverGradient": "linear-gradient(135deg, #064e3b 0%, #047857 50%, #022c22 100%)",
-      "accentColor": "#10b981",
-      "features": [
-        "Lightweight 2D Canvas engine with pixel-perfect submarine physics",
-        "Deep sea minefield dodging and torpedo defense",
-        "Ancient cipher math puzzle gameplay"
-      ]
-    },
-    {
-      "id": "abyssal-vault-3d",
-      "title": "Abyssal Vault 3D: Deep Sea Expedition",
-      "subtitle": "Realistic 3D Oceanic Submarine Trench Exploration & Math Salvage",
-      "tagline": "Dive 2,260m deep, salvage historical shipwrecks, and escape the Leviathan",
-      "description": "An immersive realistic 3D reproduction of Abyssal Vault using Three.js WebGL and Web Audio API. Pilot a high-tech exploration submarine diving through 3 distinct oceanic depth zones, salvaging sunken pirate galleons, the Titanic, and B-17 bombers, deciphering ancient mechanical cipher vaults, and surviving the Leviathan ascent.",
-      "category": "3d-webgl",
-      "categories": [
-        "3d-webgl",
-        "featured",
-        "simulation"
-      ],
-      "tags": [
-        "Three.js",
-        "WebGL",
-        "Submarine",
-        "3D Graphics",
-        "Underwater",
-        "Math Vault"
-      ],
-      "rating": 4.8,
-      "players": "1 Player",
-      "controls": "Keyboard (W/A/S/D, Arrows, Space, Shift, C for cockpit view) & Mouse/Touch",
-      "entryUrl": "games/abyssal-vault-3d/index.html",
-      "author": "Josh Lyons",
-      "version": "1.0.0",
-      "releaseDate": "2026-10-17",
-      "featured": true,
-      "badge": "3D WEBGL",
-      "icon": "⚓",
-      "coverGradient": "linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0f172a 100%)",
-      "accentColor": "#00f0ff",
-      "features": [
-        "Full 3D WebGL ocean trenches with volumetric caustics, marine snow, and hydrothermal vents",
-        "Articulated PBR submarine model with dual cockpit / chase cameras",
-        "Historical 3D shipwrecks: The Black Barnacle, R.M.S. Titanic, and B-17 Flying Fortress",
-        "3D Interactive mechanical cipher vaults and Leviathan ascent sequence"
-      ]
-    },
     {
       "id": "benevolink",
       "title": "Benevolink™: Actual Individual",
