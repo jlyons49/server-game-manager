@@ -27,15 +27,10 @@ A modern, responsive web arcade portal that allows players to discover and launc
   - Data-driven catalog via [`games.json`](file:///c:/Users/Josh/repos/server-game-manager/games.json) with client-side indexing.
   - Efficient paginated navigation (`12` cards/page) that scales smoothly to hundreds or thousands of games without DOM bloat.
   - Automated auto-discovery script (`python scripts/sync_games.py`).
-- **Interactive Theater Player**:
-  - Fullscreen embedded iframe player with floating top navigation bar:
-    - *← Back to Arcade*
-    - *Reload Sandbox*
-    - *Open in New Tab*
-    - *Toggle Native Fullscreen*
-    - *Keyboard shortcuts (`Esc` to exit, `/` to search)*
+- **Direct Fullscreen Game Launching**:
+  - Instant direct navigation to each game with zero wrapper overhead or intrusive overlays.
 - **Deep Linking & Sharing**:
-  - Direct URL hash routing: `https://game.heftyracoon.com/#play=benevolink` launches the game instantly.
+  - Direct URL hash routing: `https://game.heftyracoon.com/#game=benevolink` opens details modal.
   - One-click share button with clipboard feedback.
 - **Instant Search & Taxonomy**:
   - Real-time search across titles, descriptions, categories, and tags.

@@ -155,49 +155,6 @@
   </footer>
 
   <!-- =========================================================================
-       GAME PLAYER MODAL (THEATER / FULLSCREEN EMBED MODE)
-       ========================================================================= -->
-  <div id="player-modal" class="player-modal-backdrop" aria-hidden="true" role="dialog">
-    <header class="player-navbar">
-      <div class="player-nav-left">
-        <button id="btn-player-exit" class="btn-exit-player" title="Exit to Game Selector (ESC)">
-          <span>← BACK TO ARCADE</span>
-        </button>
-        <div class="player-game-title">
-          <span id="player-game-icon">🎮</span>
-          <span id="player-game-name">Game Title</span>
-        </div>
-      </div>
-
-      <div class="player-nav-right">
-        <button id="btn-player-reload" class="btn-player-tool" title="Reload Game">
-          <span>🔄</span> <span>Reload</span>
-        </button>
-        <button id="btn-player-newtab" class="btn-player-tool" title="Open in New Tab">
-          <span>↗</span> <span>New Tab</span>
-        </button>
-        <button id="btn-player-fullscreen" class="btn-player-tool" title="Toggle Fullscreen (F)">
-          <span>⛶</span> <span>Fullscreen</span>
-        </button>
-      </div>
-    </header>
-
-    <div class="player-iframe-container">
-      <div id="player-loading-spinner" class="player-loader">
-        <div class="loader-spinner"></div>
-        <p style="color: #94a3b8; font-weight: 600; font-size: 0.9rem;">Initializing Game Sandbox...</p>
-      </div>
-      <iframe
-        id="game-iframe"
-        class="player-iframe"
-        src=""
-        allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </div>
-
-  <!-- =========================================================================
        GAME DETAILS MODAL
        ========================================================================= -->
   <div id="details-modal" class="modal-backdrop" aria-hidden="true" role="dialog">

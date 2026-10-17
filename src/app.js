@@ -47,17 +47,6 @@ class GamePortalApp {
       paginationControls: document.getElementById('pagination-controls'),
       headerGameCount: document.getElementById('header-game-count'),
 
-      // Player Modal
-      playerModal: document.getElementById('player-modal'),
-      playerGameName: document.getElementById('player-game-name'),
-      playerGameIcon: document.getElementById('player-game-icon'),
-      playerIframe: document.getElementById('game-iframe'),
-      playerLoader: document.getElementById('player-loading-spinner'),
-      btnPlayerExit: document.getElementById('btn-player-exit'),
-      btnPlayerReload: document.getElementById('btn-player-reload'),
-      btnPlayerNewtab: document.getElementById('btn-player-newtab'),
-      btnPlayerFullscreen: document.getElementById('btn-player-fullscreen'),
-
       // Details Modal
       detailsModal: document.getElementById('details-modal'),
       btnCloseDetails: document.getElementById('btn-close-details'),
@@ -121,9 +110,7 @@ class GamePortalApp {
         this.dom.searchInput.focus();
         this.dom.searchInput.select();
       } else if (e.key === 'Escape') {
-        if (this.dom.playerModal.classList.contains('active')) {
-          this.closePlayerModal();
-        } else if (this.dom.detailsModal.classList.contains('active')) {
+        if (this.dom.detailsModal.classList.contains('active')) {
           this.closeDetailsModal();
         }
       }
@@ -149,25 +136,6 @@ class GamePortalApp {
       this.dom.viewListBtn.classList.add('active');
       this.dom.viewGridBtn.classList.remove('active');
       this.dom.gamesGrid.classList.add('list-view');
-    });
-
-    // Player Modal Controls
-    this.dom.btnPlayerExit.addEventListener('click', () => this.closePlayerModal());
-    this.dom.btnPlayerReload.addEventListener('click', () => {
-      if (this.activeGame) {
-        this.dom.playerLoader.classList.remove('hidden');
-        this.dom.playerIframe.src = this.activeGame.entryUrl;
-      }
-    });
-    this.dom.btnPlayerNewtab.addEventListener('click', () => {
-      if (this.activeGame) {
-        window.open(this.activeGame.entryUrl, '_blank');
-      }
-    });
-    this.dom.btnPlayerFullscreen.addEventListener('click', () => this.toggleFullscreen());
-
-    this.dom.playerIframe.addEventListener('load', () => {
-      this.dom.playerLoader.classList.add('hidden');
     });
 
     // Details Modal Controls
@@ -475,32 +443,9 @@ class GamePortalApp {
     });
   }
 
-  launchGame(game, updateHash = true) {
-    this.activeGame = game;
-    this.dom.playerGameName.textContent = game.title;
-    this.dom.playerGameIcon.textContent = game.icon || '🎮';
-    this.dom.playerLoader.classList.remove('hidden');
-    
-    // Set sandbox iframe URL
-    this.dom.playerIframe.src = game.entryUrl;
-    this.dom.playerModal.classList.add('active');
-    this.dom.playerModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-
-    if (updateHash) {
-      window.history.pushState(null, '', `#play=${game.id}`);
-    }
-  }
-
-  closePlayerModal() {
-    this.dom.playerModal.classList.remove('active');
-    this.dom.playerModal.setAttribute('aria-hidden', 'true');
-    this.dom.playerIframe.src = ''; // Unload iframe to kill background audio and game loops
-    document.body.style.overflow = '';
-    this.activeGame = null;
-
-    if (window.location.hash.startsWith('#play=')) {
-      window.history.pushState(null, '', window.location.pathname);
+  launchGame(game) {
+    if (game && game.entryUrl) {
+      window.location.href = game.entryUrl;
     }
   }
 
@@ -533,16 +478,6 @@ class GamePortalApp {
     this.dom.detailsModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     this.activeGame = null;
-  }
-
-  toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      this.dom.playerModal.requestFullscreen().catch(err => {
-        console.warn('Fullscreen request failed:', err);
-      });
-    } else {
-      document.exitFullscreen();
-    }
   }
 }
 

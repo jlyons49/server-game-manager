@@ -359,15 +359,6 @@
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
 
-    <!-- Floating Hub Return Pill (Shown only when opened directly, not embedded in iframe) -->
-    <a href="../../" id="hub-return-pill" style="display:none; position:fixed; bottom:14px; left:14px; z-index:999999; background:rgba(9,13,22,0.85); backdrop-filter:blur(8px); border:1px solid rgba(0,240,255,0.4); color:#00f0ff; padding:7px 14px; border-radius:999px; font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:12px; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,0.5); transition:all 0.2s ease;">🕹️ Back to Arcade Hub</a>
-    <script>
-      if (window.self === window.top) {
-        const p = document.getElementById('hub-return-pill');
-        if (p) p.style.display = 'inline-flex';
-      }
-    </script>
-
     <!-- Main Game Module -->
     <script type="module" src="js/game.js"></script>
 </body>

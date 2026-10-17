@@ -81,23 +81,7 @@ You can also directly edit `games.json` in the root:
 
 ---
 
-### Step 3: (Optional) Add a Floating Return Pill
-To allow players to return to the Arcade Hub if they open your game URL directly (outside the portal iframe), add this snippet just before `</body>` in your game's `index.html`:
-
-```html
-<!-- Floating Hub Return Pill -->
-<a href="../../" id="hub-return-pill" style="display:none; position:fixed; bottom:14px; left:14px; z-index:999999; background:rgba(9,13,22,0.85); backdrop-filter:blur(8px); border:1px solid rgba(0,240,255,0.4); color:#00f0ff; padding:7px 14px; border-radius:999px; font-family:-apple-system,BlinkMacSystemFont,sans-serif; font-size:12px; font-weight:700; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,0.5);">🕹️ Back to Arcade Hub</a>
-<script>
-  if (window.self === window.top) {
-    const p = document.getElementById('hub-return-pill');
-    if (p) p.style.display = 'inline-flex';
-  }
-</script>
-```
-
----
-
-### Step 4: Commit and Push
+### Step 3: Commit and Push
 ```bash
 git add .
 git commit -m "feat: add my-new-game to arcade portal"
