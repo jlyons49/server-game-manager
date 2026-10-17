@@ -156,19 +156,35 @@ a:active { color: var(--geo-red); text-decoration: underline; }
   font-family: var(--font-system);
 }
 
-/* Hit Counter */
+/* Hit Counter - Classic 90s Segmented Odometer */
 .counter-box {
+  display: inline-flex;
+  align-items: center;
+  background-color: #000000;
+  border-top: 2px solid #505050;
+  border-left: 2px solid #505050;
+  border-right: 2px solid #ffffff;
+  border-bottom: 2px solid #ffffff;
+  padding: 1px 2px;
+  vertical-align: middle;
+}
+
+.counter-box .digit {
+  display: inline-block;
   background-color: #000000;
   color: var(--geo-green);
   font-family: var(--font-mono);
   font-weight: bold;
   font-size: 0.95rem;
-  padding: 2px 8px;
-  border-top: 2px solid #505050;
-  border-left: 2px solid #505050;
-  border-right: 2px solid #ffffff;
-  border-bottom: 2px solid #ffffff;
-  letter-spacing: 3px;
+  line-height: 1.25;
+  width: 13px;
+  text-align: center;
+  border-right: 1px solid #282828;
+  text-shadow: 0 0 3px rgba(0, 255, 0, 0.6);
+}
+
+.counter-box .digit:last-child {
+  border-right: none;
 }
 
 /* Horizontal Rule Divider */

@@ -70,19 +70,42 @@ class GamePortalApp {
     this.renderCatalog();
   }
 
-  initVisitorCounter() {
+  async initVisitorCounter() {
+    let count = 1337;
     try {
-      let hits = parseInt(localStorage.getItem('hefty_retro_visits') || '1337', 10);
-      hits += 1;
-      localStorage.setItem('hefty_retro_visits', hits.toString());
-      if (this.dom.visitorCounterVal) {
-        this.dom.visitorCounterVal.textContent = String(hits).padStart(6, '0');
+      const res = await fetch('/api/counter?t=' + Date.now(), { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (typeof data.count === 'number') {
+          count = data.count;
+          try {
+            localStorage.setItem('hefty_retro_visits', count.toString());
+          } catch (_) {}
+        }
+      } else {
+        throw new Error('API status ' + res.status);
       }
-    } catch {
-      if (this.dom.visitorCounterVal) {
-        this.dom.visitorCounterVal.textContent = '001338';
+    } catch (_) {
+      // Fallback to localStorage if API is unreachable (e.g. offline preview)
+      try {
+        let stored = parseInt(localStorage.getItem('hefty_retro_visits') || '1337', 10);
+        count = stored + 1;
+        localStorage.setItem('hefty_retro_visits', count.toString());
+      } catch (e) {
+        count = 1338;
       }
     }
+
+    this.renderCounter(count);
+  }
+
+  renderCounter(count) {
+    if (!this.dom.visitorCounterVal) return;
+    const formatted = String(count).padStart(6, '0');
+    this.dom.visitorCounterVal.innerHTML = formatted
+      .split('')
+      .map(d => `<span class="digit">${d}</span>`)
+      .join('');
   }
 
   async loadCatalog() {
