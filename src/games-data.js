@@ -90,6 +90,47 @@ export const fallbackGamesData = {
         "Oxygen restoration vents, depth minefields, and sonar ping radar",
         "High-speed ascent chase sequence against the Abyssal Leviathan"
       ]
+    },
+    {
+      "id": "soccer-typing",
+      "title": "Soccer Typing: Striker Challenge",
+      "subtitle": "Touch typing speed & penalty shootout arcade challenge",
+      "tagline": "Dribble up, aim for the top bins, and beat the keeper with lightning-fast typing",
+      "description": "An arcade soccer typing game inspired by Slam Dunk Typing. Put your speed and precision to the test across scalable difficulty tiers—from Rookie training to World Class legends. Target the high-scoring top corners, outwit the goalkeeper during dynamic approach runs, and fill your trophy case with golden boots and championships!",
+      "category": "arcade",
+      "categories": [
+        "arcade",
+        "featured",
+        "puzzle"
+      ],
+      "tags": [
+        "Typing",
+        "Soccer",
+        "Arcade",
+        "Canvas 2.5D",
+        "Web Audio",
+        "Trophy Cabinet"
+      ],
+      "rating": 4.9,
+      "players": "1 Player",
+      "controls": "Keyboard (A-Z, Backspace)",
+      "entryUrl": "games/soccer-typing/index.html",
+      "author": "Josh Lyons",
+      "version": "1.0.0",
+      "releaseDate": "2026-10-18",
+      "featured": true,
+      "badge": "NEW RELEASE",
+      "icon": "⚽",
+      "coverGradient": "linear-gradient(135deg, #064e3b 0%, #047857 50%, #00f0ff 100%)",
+      "accentColor": "#00ff66",
+      "features": [
+        "Dynamic 10-shot striker shootout with lead-up approach run timer",
+        "High-value corner targeting (Top Bins / Upper 90) with goalkeeper AI reaction physics",
+        "Scalable difficulty tiers from Rookie (3-4 letters) to World Class (7-13 letters)",
+        "Persistent high score tracker and 10 unlockable career trophies",
+        "Full 11v11 match play preview and tactical chalkboard roadmap",
+        "Procedural Web Audio sound effects: referee whistles, crowd roar, kicks, and net swishes"
+      ]
     }
   ]
 };
