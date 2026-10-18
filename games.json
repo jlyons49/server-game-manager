@@ -151,6 +151,48 @@
         "Full 11v11 match play preview and tactical chalkboard roadmap",
         "Procedural Web Audio sound effects: referee whistles, crowd roar, kicks, and net swishes"
       ]
+    },
+    {
+      "id": "big-bad-chicken",
+      "title": "Big Bad Chicken",
+      "subtitle": "Eat seeds, cows & skyscrapers — climb to Level 1,000,000!",
+      "tagline": "Hole.io & Katamari poultry rampage with an insatiable hunger bar",
+      "description": "Control a ferocious chicken with an unquenchable appetite! Gobble up seeds, worms, insects, rival AI chickens, sheep, cows, barns, pickup trucks, and glass skyscrapers as you climb through an exponential leveling system all the way to Level 1,000,000. Balance your draining hunger bar, pull off huge feasting combos, collect gold coins, and unlock silly chickens like the Lava Chicken, Shadow Chicken, and Disco Chicken in the coop shop!",
+      "category": "arcade",
+      "categories": [
+        "arcade",
+        "featured"
+      ],
+      "tags": [
+        "Hole.io",
+        "Katamari",
+        "Exponential Leveling",
+        "Mobile Touch",
+        "Canvas 2.5D",
+        "Web Audio",
+        "Skin Shop"
+      ],
+      "rating": 4.9,
+      "players": "1 Player",
+      "controls": "Mobile: Drag to Steer + Dash Button | Desktop: WASD / Arrows / Mouse + Space",
+      "entryUrl": "games/big-bad-chicken/index.html",
+      "author": "Josh Lyons",
+      "version": "1.0.0",
+      "releaseDate": "2026-10-18",
+      "featured": true,
+      "badge": "NEW RELEASE",
+      "icon": "🐔",
+      "coverGradient": "linear-gradient(135deg, #7c2d12 0%, #ea580c 50%, #facc15 100%)",
+      "accentColor": "#f97316",
+      "features": [
+        "Katamari & Hole.io gravitational suction physics that swallows anything smaller than your beak",
+        "Exponential leveling progression climbing dynamically all the way to Level 1,000,000",
+        "Metabolism hunger bar that drains continuously—keep feasting or starve!",
+        "Dynamic 2.5D camera with smooth automatic zoom-out from backyard grass to cosmic orbit",
+        "Roaming AI chickens that panic, squawk, and flee from larger chickens",
+        "Coop Shop with 9 silly unlockable chickens: Shadow, Lava, Disco, Cyber Cluck 2077, Golden Nugget, and Cosmic Overlord",
+        "Procedural Web Audio synthesizer for background music, chomps, clucks, and celebratory fanfares"
+      ]
     }
   ]
 }
