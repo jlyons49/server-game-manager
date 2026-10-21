@@ -31,7 +31,7 @@ jobs:
         with:
           SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.SERVER_HOST || 'game.heftyracoon.com' }}
-          REMOTE_USER: ${{ secrets.SERVER_USER || 'root' }}
+          REMOTE_USER: ${{ secrets.SERVER_USER || 'deploy' }}
           REMOTE_PORT: ${{ secrets.SERVER_PORT || '2348' }}
           TARGET: "/var/www/html/games/YOUR_GAME_SLUG"
           ARGS: "-rlgoDzvc -i --delete"
@@ -39,7 +39,6 @@ jobs:
           SCRIPT_BEFORE: |
             mkdir -p /var/www/html/games/YOUR_GAME_SLUG
           SCRIPT_AFTER: |
-            chown -R www-data:www-data /var/www/html/games/YOUR_GAME_SLUG
             chmod -R 755 /var/www/html/games/YOUR_GAME_SLUG
 ```
 
